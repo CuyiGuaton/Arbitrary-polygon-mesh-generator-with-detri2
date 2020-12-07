@@ -6,11 +6,9 @@ from math import sqrt
 def write_points(xPoints, yPoints):
     largo =len(xPoints)
     f = open('data.dat', 'w')
-    f.write("2 rbox {} D2 z\n".format(largo))
-    f.write('{}\n'.format(largo))
+    f.write("{} 2 0 0\n".format(largo))
     for i in range(0,largo):
-        f.write('{0} {1}\n'.format(xPoints[i], yPoints[i]))
-
+        f.write('{0} {1} {2}\n'.format(i, xPoints[i], yPoints[i]))
     f.close()
 
 
@@ -20,24 +18,33 @@ def equitalero(nPoints, xPoints, yPoints):
     h = sqrt(3) # = sqrt(3)*2/2
     i = 0
     for i in range(0, nPoints):
+        if i%2 != 0:
+            xPoints.append(L*0)
+            yPoints.append(i*h)
         for j in range(0, nPoints):
             xPoints.append(L*j if i%2 == 0 else L*j + L/2)
             yPoints.append(i*h)
         if i%2 == 0:
-            xPoints.append(L*nPoints + L/2)
+            xPoints.append(L*(nPoints-1) + L/2)
             yPoints.append(i*h)
-        else:
-            xPoints.append(L*0)
-            yPoints.append(i*h)
+        
     
 
 def generate_random_points(nPoints, xPoints, yPoints):
 
     uwu = nPoints
-
-    for _ in range(0,nPoints-4):
-        x = random.randrange(0, uwu)
-        y = random.randrange(0, uwu)
+    for _ in range(0, nPoints-4):
+        #esto evita elementos repetidos
+        while True:
+            flag = False
+            x = random.randrange(0, uwu)
+            y = random.randrange(0, uwu)
+            for i in range(0,len(xPoints)):
+                if xPoints[i] == x and yPoints[i] == y:
+                    flag = True
+                    break
+            if flag == False:
+                break
         xPoints.append(int(x))
         yPoints.append(int(y))
 
@@ -56,23 +63,39 @@ def generate_random_points(nPoints, xPoints, yPoints):
 
 
 def move_edges(nPoints, xPoints, yPoints):
-    tolerance =  0.05
+    tolerance =  0.025
     n = nPoints
+    r = random.uniform(0, 1)
 
     for i in range(0, len(xPoints)):
         #eje x
-        if xPoints[i] >= nPoints*(1.0-tolerance): 
-            xPoints[i] = n
-            continue
-        if yPoints[i] >= nPoints*(1.0-tolerance): 
-            yPoints[i] = n
-            continue
-        if xPoints[i] <= nPoints*tolerance: 
-            xPoints[i] = 0
-            continue
-        if yPoints[i] <= nPoints*tolerance: 
-            yPoints[i] = 0
-            continue
+        if r > 0.5:
+            if xPoints[i] >= nPoints*(1.0-tolerance): 
+                xPoints[i] = n
+                continue
+            if yPoints[i] >= nPoints*(1.0-tolerance): 
+                yPoints[i] = n
+                continue
+            if xPoints[i] <= nPoints*tolerance: 
+                xPoints[i] = 0
+                continue
+            if yPoints[i] <= nPoints*tolerance: 
+                yPoints[i] = 0
+                continue
+        else:
+            if xPoints[i] <= nPoints*tolerance: 
+                xPoints[i] = 0
+                continue
+            if yPoints[i] <= nPoints*tolerance: 
+                yPoints[i] = 0
+                continue
+            if xPoints[i] >= nPoints*(1.0-tolerance): 
+                xPoints[i] = n
+                continue
+            if yPoints[i] >= nPoints*(1.0-tolerance): 
+                yPoints[i] = n
+                continue
+
 
     
 def generate_uniform_points(nPoints, xPoints, yPoints, dist = 0):

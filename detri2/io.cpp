@@ -460,7 +460,7 @@ int Triangulation::read_nodes()
   ct_in_vrts = pnum;
   in_vrts = new Vertex[pnum];
 
-  printf("Reading %d points from file %s\n", pnum, filename);
+  //printf("Reading %d points from file %s\n", pnum, filename);
   REAL x, y, h;
 
   for (i = 0; i < pnum; i++) {
