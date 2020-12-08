@@ -152,16 +152,30 @@ int main(int argc, char* argv[]){
 	int num_frontier_edges=0;
 	int num_frontier_border_edges=0;
 	int num_interior_edges=0;
-	int flag;
-	
+		
 	for(i = 0; i < tnumber; i++)
 	{
 		for(j = 0; j < 3; j++)
 		{
-
-
 			//Datos estadisticos
 			//Borderedge and frontieredge
+			if(adj[3*i +j] < 0){
+				if (j == max[i])
+					num_terminal_border_edges++;
+				else
+					num_frontier_border_edges++;
+			}else
+			{
+				//If has frontieredge
+				if(is_nomax_nomax(i, adj[3*i + j], triangles, max))
+					num_frontier_edges++;
+				//If has terminal_edge
+				else if(is_max_max(i, adj[3*i + j], triangles, max))
+					num_terminal_edges++;
+				else //if is interioredge
+					num_interior_edges++;
+				//if(is_max_nomax(i, adj[3*i + j], triangles, max))
+			}
 			
 
 			//Marcación real
@@ -177,15 +191,16 @@ int main(int argc, char* argv[]){
 			}
 		}
 	}
+	free(max);
 	auto te_label =std::chrono::high_resolution_clock::now();
 	 
 	//debug_block(print_poly(root_id, tnumber););
 
 
 
-	for(i = 0; i < tnumber; i++){
-		visited[i] = FALSE;
-	}
+	//for(i = 0; i < tnumber; i++){
+	//	visited[i] = FALSE;
+	//}
 
 	//medir tiempo
     
@@ -258,25 +273,24 @@ int main(int argc, char* argv[]){
 		
 	}
 	std::cout << std::setprecision(3) << std::fixed;
-    //std::cout <<"pnumber tnumber num_reg poly_be total_be min_poly_be max_poly_be total_edges max_edges min_edges edges_by_poly ratio_be_per_poly tdelaunay tlabel talgorithm ttraveandtopt ttravelalone topt"<<std::endl;
+    std::cout <<"pnumber tnumber num_reg poly_be total_be min_poly_be max_poly_be ratio_be_per_poly total_edges max_edges min_edges edges_by_poly  num_terminal_edges num_terminal_border_edges num_frontier_edges num_frontier_border_edges num_interior_edges tdelaunay tlabel talgorithm ttraveandtopt ttravelalone topt"<<std::endl;
 	std::cout<<pnumber<<" "<<tnumber<<" "<<id_pos_poly;
 	std::cout<<" "<<est_poly_with_be<<" "<<est_total_be<<" "<<est_min_triangles_be<<" "<<est_max_triangles_be;
-	std::cout<<" "<<est_total_edges<<" "<<est_max_edges<<" "<<est_min_edges<<" "<<(float)est_total_edges/id_pos_poly;
 	std::cout<<" "<<(est_poly_with_be > 0 ? est_ratio_be/est_poly_with_be : 0.0);
+	std::cout<<" "<<est_total_edges<<" "<<est_max_edges<<" "<<est_min_edges<<" "<<(float)est_total_edges/id_pos_poly;
+	std::cout<<" "<<num_terminal_edges/2<<" "<<num_terminal_border_edges<<" "<<num_frontier_edges/2<<" "<<num_frontier_border_edges<<" "<<num_interior_edges/2;
 	std::cout<<" "<<std::chrono::duration_cast<std::chrono::milliseconds>(te_delaunay - tb_delaunay).count();
 	std::cout<<" "<<std::chrono::duration_cast<std::chrono::milliseconds>(te_label - tb_label).count();
-	//std::cout<<" "<<std::chrono::duration_cast<std::chrono::milliseconds>(te_desconect - tb_desconect).count();
 	std::cout<<" "<<std::chrono::duration_cast<std::chrono::milliseconds>(t2 - t1 ).count();
 	std::cout<<" "<<std::chrono::duration_cast<std::chrono::milliseconds>(t2 - t1 ).count() - tcost_be;
 	std::cout<<" "<<tcost_be<<std::endl;
-	
+	//std::cout<<3*pnumber - 3 - (num_terminal_border_edges + num_frontier_border_edges) <<" = "<<num_terminal_edges/2 + num_terminal_border_edges + num_frontier_edges/2 + num_frontier_border_edges + num_interior_edges/2<<" "<<(3*pnumber - 3 - (num_terminal_border_edges + num_frontier_border_edges) == num_terminal_edges/2 + num_terminal_border_edges + num_frontier_edges/2 + num_frontier_border_edges + num_interior_edges/2)<<std::endl;
 	free(r);
 	free(triangles);
 	free(adj);
-	free(max );
 	free(visited );
 	free(chose_seed_triangle);
-	free(mesh );
+	free(mesh);
 	free(poly);
 	free(pos_poly);
     

@@ -165,6 +165,86 @@ static int get_edge_index(int u, int v, int i, int *p)
 }
 
 
+/* is_max_nomax
+ * 
+ * Indica si la arista compartida entre los triángulos i y j
+ * es internal-edge.
+ * */
+
+int is_max_nomax(int i, int j, int *p, int *max)
+{
+	int p0i;
+	int p1i;
+	int p2i;
+	int p0j;
+	int p1j;
+	int p2j;
+	
+	p0i = p[3*i + 0];
+	p1i = p[3*i + 1];
+	p2i = p[3*i + 2];
+	
+	p0j = p[3*j + 0];
+	p1j = p[3*j + 1];
+	p2j = p[3*j + 2];
+	
+	int ij;
+	int ii;
+	
+	if(same_edge(p0i, p1i, p0j, p1j))
+	{
+		ij = get_edge_index(p0j, p1j, j, p);
+		ii = 0;
+	}
+	else if(same_edge(p1i, p2i, p0j, p1j))
+	{
+		ij = get_edge_index(p0j, p1j, j, p);
+		ii = 1;
+	}
+	else if(same_edge(p2i, p0i, p0j, p1j))
+	{
+		ij = get_edge_index(p0j, p1j, j, p);
+		ii = 2;
+	}
+	else if(same_edge(p0i, p1i, p1j, p2j))
+	{
+		ij = get_edge_index(p1j, p2j, j, p);
+		ii = 0;
+	}
+	else if(same_edge(p1i, p2i, p1j, p2j))
+	{
+		ij = get_edge_index(p1j, p2j, j, p);
+		ii = 1;
+	}
+	else if(same_edge(p2i, p0i, p1j, p2j))
+	{
+		ij = get_edge_index(p1j, p2j, j, p);
+		ii = 2;
+	}
+	else if(same_edge(p0i, p1i, p2j, p0j))
+	{
+		ij = get_edge_index(p2j, p0j, j, p);
+		ii = 0;
+	}
+	else if(same_edge(p1i, p2i, p2j, p0j))
+	{
+		ij = get_edge_index(p2j, p0j, j, p);
+		ii = 1;
+	}
+	else if(same_edge(p2i, p0i, p2j, p0j))
+	{
+		ij = get_edge_index(p2j, p0j, j, p);
+		ii = 2;
+	}
+	else
+	{
+		fprintf(stderr, "** ERROR ** is_nomax_nomax: Problema insperado para triángulos %d y %d.\n", i, j);
+		exit(EXIT_FAILURE);
+	}
+	
+	return ((ij == max[j]) && (ii != max[i]) || (ij != max[j]) && (ii == max[i]));
+}
+
 
 /* is_nomax_nomax
  * 
