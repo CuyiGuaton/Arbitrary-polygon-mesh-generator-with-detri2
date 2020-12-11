@@ -1,0 +1,6 @@
+/home/cuyi/Dropbox/Doctorado/paper_examen/algo_with_detri2/build/CMakeFiles/rebuild_cache.dir
+/home/cuyi/Dropbox/Doctorado/paper_examen/algo_with_detri2/build/CMakeFiles/edit_cache.dir
+/home/cuyi/Dropbox/Doctorado/paper_examen/algo_with_detri2/build/CMakeFiles/DelaunayPolyGenerator.dir
+/home/cuyi/Dropbox/Doctorado/paper_examen/algo_with_detri2/build/detri2/CMakeFiles/rebuild_cache.dir
+/home/cuyi/Dropbox/Doctorado/paper_examen/algo_with_detri2/build/detri2/CMakeFiles/edit_cache.dir
+/home/cuyi/Dropbox/Doctorado/paper_examen/algo_with_detri2/build/detri2/CMakeFiles/detri2.dir

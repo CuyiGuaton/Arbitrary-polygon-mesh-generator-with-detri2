@@ -1,0 +1,28 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/cuyi/Dropbox/Doctorado/paper_examen/algo_with_detri2/consts.h
+
+/home/cuyi/Dropbox/Doctorado/paper_examen/algo_with_detri2/polygon.cpp
+stdlib.h
+-
+stdio.h
+-
+math.h
+-
+consts.h
+/home/cuyi/Dropbox/Doctorado/paper_examen/algo_with_detri2/consts.h
+triang.h
+/home/cuyi/Dropbox/Doctorado/paper_examen/algo_with_detri2/triang.h
+polygon.h
+/home/cuyi/Dropbox/Doctorado/paper_examen/algo_with_detri2/polygon.h
+
+/home/cuyi/Dropbox/Doctorado/paper_examen/algo_with_detri2/polygon.h
+
+/home/cuyi/Dropbox/Doctorado/paper_examen/algo_with_detri2/triang.h
+
