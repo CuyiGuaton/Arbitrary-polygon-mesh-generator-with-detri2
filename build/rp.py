@@ -5,6 +5,7 @@ from math import sqrt
 
 def write_points(nPoints, xPoints, yPoints):
     largo =len(xPoints)
+    #f = open(str(largo) + '.node', 'w')
     f = open('autodata.node', 'w')
     f.write("{} 2 0 0\n".format(largo))
     for i in range(0,largo):
@@ -48,7 +49,7 @@ def generate_random_points(nPoints, xPoints, yPoints):
 
 
 def move_point(nPoints, xPoints, yPoints):
-    tolerance =  0.005
+    tolerance =  0.03
     #tolerance =  5/(nPoints/10)
     n = nPoints
     r = random.uniform(0, 1)
