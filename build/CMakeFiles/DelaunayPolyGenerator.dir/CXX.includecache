@@ -10,6 +10,28 @@
 
 /home/cuyi/Dropbox/Doctorado/paper_examen/algo_with_detri2/consts.h
 
+/home/cuyi/Dropbox/Doctorado/paper_examen/algo_with_detri2/io.cpp
+iostream
+-
+vector
+-
+algorithm
+-
+errno.h
+-
+stdlib.h
+-
+stdio.h
+-
+string.h
+-
+malloc.h
+-
+consts.h
+/home/cuyi/Dropbox/Doctorado/paper_examen/algo_with_detri2/consts.h
+triang.h
+/home/cuyi/Dropbox/Doctorado/paper_examen/algo_with_detri2/triang.h
+
 /home/cuyi/Dropbox/Doctorado/paper_examen/algo_with_detri2/io.h
 
 /home/cuyi/Dropbox/Doctorado/paper_examen/algo_with_detri2/main.cpp
@@ -31,10 +53,22 @@ iomanip
 -
 cstdlib
 -
-string.h
--
 io.h
 /home/cuyi/Dropbox/Doctorado/paper_examen/algo_with_detri2/io.h
+consts.h
+/home/cuyi/Dropbox/Doctorado/paper_examen/algo_with_detri2/consts.h
+triang.h
+/home/cuyi/Dropbox/Doctorado/paper_examen/algo_with_detri2/triang.h
+polygon.h
+/home/cuyi/Dropbox/Doctorado/paper_examen/algo_with_detri2/polygon.h
+
+/home/cuyi/Dropbox/Doctorado/paper_examen/algo_with_detri2/polygon.cpp
+stdlib.h
+-
+stdio.h
+-
+math.h
+-
 consts.h
 /home/cuyi/Dropbox/Doctorado/paper_examen/algo_with_detri2/consts.h
 triang.h
@@ -47,6 +81,16 @@ polygon.h
 /home/cuyi/Dropbox/Doctorado/paper_examen/algo_with_detri2/polymesh.h
 math.h
 -
+
+/home/cuyi/Dropbox/Doctorado/paper_examen/algo_with_detri2/triang.cpp
+stdlib.h
+-
+stdio.h
+-
+math.h
+-
+consts.h
+/home/cuyi/Dropbox/Doctorado/paper_examen/algo_with_detri2/consts.h
 
 /home/cuyi/Dropbox/Doctorado/paper_examen/algo_with_detri2/triang.h
 
