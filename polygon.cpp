@@ -353,7 +353,7 @@ int generate_polygon(int * poly, int * triangles, int * adj, double *r, int * vi
         poly[ind_poly] = triangles[3 * i + 2];
         ind_poly++;
 
-        visited[i] = TRUE;
+        //visited[i] = TRUE;
         return ind_poly;
     } else if(num_FrontierEdges == 2) {
         debug_print("T %d Tiene 2 Frontier edge, es oreja, se usa como semilla para generar el poly\n", i);
@@ -385,12 +385,13 @@ int generate_polygon(int * poly, int * triangles, int * adj, double *r, int * vi
             }
         }
     }else {
-        fprintf(stderr, "** ERROR ** num_FrontierEdges = %d", num_FrontierEdges);
+        end_point = triangles[3*i + 0];
+        initial_point = triangles[3*i + 0];
     }
     
     
     /*se marca como visitado */
-    visited[i] = TRUE;
+    //visited[i] = TRUE;
     num_FrontierEdges = 0;
     k = i;
     aux = k;
@@ -406,7 +407,7 @@ int generate_polygon(int * poly, int * triangles, int * adj, double *r, int * vi
 
         /*se marca el triangulo visto como visitado y se suma al area del poligono */
         
-        visited[k] = TRUE;
+      //  visited[k] = TRUE;
         t0 = adj[3 * k + 0];
         t1 = adj[3 * k + 1];
         t2 = adj[3 * k + 2];

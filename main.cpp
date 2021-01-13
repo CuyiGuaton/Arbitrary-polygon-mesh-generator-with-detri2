@@ -152,7 +152,12 @@ int main(int argc, char* argv[]){
 	int num_frontier_edges=0;
 	int num_frontier_border_edges=0;
 	int num_interior_edges=0;
-		
+
+
+	for(i = 0; i < tnumber; i++){
+		visited[i] = FALSE;
+	}
+
 	for(i = 0; i < tnumber; i++)
 	{
 		for(j = 0; j < 3; j++)
@@ -183,7 +188,13 @@ int main(int argc, char* argv[]){
 			{
 				adj[3*i + j] = NO_ADJ;
 			}
-			
+
+
+			if(adj[3*i +j] >= 0 && is_max_max(i, adj[3*i + j], triangles, max) && visited[adj[3*i + j]] == FALSE){
+				visited[i] = TRUE;
+				std::cout<<i<<" ";
+			}
+
 			//Puntos en el borde
 			if(adj[3*i +j] < 0){
 				border_point.push_back(triangles[3*i + (j+1 %3)]);
@@ -196,12 +207,6 @@ int main(int argc, char* argv[]){
 	 
 	//debug_block(print_poly(root_id, tnumber););
 
-
-
-	//for(i = 0; i < tnumber; i++){
-	//	visited[i] = FALSE;
-	//}
-
 	//medir tiempo
     
 
@@ -213,7 +218,8 @@ int main(int argc, char* argv[]){
 		/* si tiene 2-3 froint edge y no ha sido visitado*/
 		//AGREGAR LA CONDICION DE QUE SI ROOT_ID = -1 ENTONCES NO GENERA POLY, MARCAR_ID[ALGO] == -1 DESPUES DE GENERAR C/POLY!!!
 		int num_FrontierEdges = count_FrontierEdges(i, adj);
-		if(!visited[i] && num_FrontierEdges > 0){
+		//if(!visited[i] && num_FrontierEdges > 0){
+		if(visited[i] == TRUE){
 
 			chose_seed_triangle[id_chose_seed_triangle] = i;
 			id_chose_seed_triangle++;
@@ -251,13 +257,7 @@ int main(int argc, char* argv[]){
 
 	
 	
-	for (i = 0; i < tnumber; i++) 
-	{
-		if(visited[i] == FALSE){
-			fprintf(stderr,"ERROR hmnito mira, el triangulo %d no se visito ", i);
-		}
-	}
-	
+
 	
 	write_geomview(r,triangles, pnumber, tnumber,i_mesh, mesh, id_pos_poly, pos_poly, print_triangles, ppath, chose_seed_triangle, id_chose_seed_triangle, border_point);
 
