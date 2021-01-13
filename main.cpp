@@ -198,9 +198,9 @@ int main(int argc, char* argv[]){
 
 
 
-	//for(i = 0; i < tnumber; i++){
-	//	visited[i] = FALSE;
-	//}
+	for(i = 0; i < tnumber; i++){
+		visited[i] = FALSE;
+	}
 
 	//medir tiempo
     
@@ -261,7 +261,7 @@ int main(int argc, char* argv[]){
 	
 	write_geomview(r,triangles, pnumber, tnumber,i_mesh, mesh, id_pos_poly, pos_poly, print_triangles, ppath, chose_seed_triangle, id_chose_seed_triangle, border_point);
 
-	int edges = mesh[0];
+	int edges = pos_poly[0];
 	int est_max_edges = edges;
 	int est_min_edges = edges;
 	int est_total_edges= edges;
