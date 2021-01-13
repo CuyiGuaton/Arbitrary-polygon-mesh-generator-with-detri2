@@ -192,7 +192,6 @@ int main(int argc, char* argv[]){
 
 			if(adj[3*i +j] >= 0 && is_max_max(i, adj[3*i + j], triangles, max) && visited[adj[3*i + j]] == FALSE){
 				visited[i] = TRUE;
-				std::cout<<i<<" ";
 			}
 
 			//Puntos en el borde
@@ -261,7 +260,7 @@ int main(int argc, char* argv[]){
 	
 	write_geomview(r,triangles, pnumber, tnumber,i_mesh, mesh, id_pos_poly, pos_poly, print_triangles, ppath, chose_seed_triangle, id_chose_seed_triangle, border_point);
 
-	int edges = mesh[0];
+	int edges = pos_poly[0];
 	int est_max_edges = edges;
 	int est_min_edges = edges;
 	int est_total_edges= edges;
