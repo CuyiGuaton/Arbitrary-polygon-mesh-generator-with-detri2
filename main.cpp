@@ -34,7 +34,7 @@ int main(int argc, char* argv[]){
     //char* params[] = {const_cast<char*> ("./detri2"), const_cast<char*> ("-z"), const_cast<char*> ("test.node")};
 	//char* params[] = {const_cast<char*> ("./detri2"), const_cast<char*> ("-z"), const_cast<char*> ("506randompoints.node")};
 	//char* params[] = {const_cast<char*> ("./detri2"), const_cast<char*> ("-z"), const_cast<char*> ("506equilateral.node")};
-    int print_triangles = 0;
+    int print_triangles = 1;
     char* ppath;
     //char* ppath = const_cast<char*> ("test");
     //TMesh *Tr = new TMesh(nparam, params);    
@@ -63,7 +63,7 @@ int main(int argc, char* argv[]){
 
 
 	/* Se crean los poligonos */
-	int *poly = (int *)malloc(tnumber*sizeof(int));
+	//int *poly = (int *)malloc(tnumber*sizeof(int));
 	int length_poly = 0;
 	int *pos_poly = (int *)malloc(tnumber*sizeof(int));
 	int id_pos_poly = 0;
@@ -124,8 +124,8 @@ int main(int argc, char* argv[]){
         adj[3*idx+ 0] = tri->nei[0].tri->idx;
         adj[3*idx+ 1] = tri->nei[1].tri->idx;
         adj[3*idx+ 2] = tri->nei[2].tri->idx;
-        //std::cout<<idx<<" | "<<triangles[3*idx+0]<<" "<<triangles[3*idx+1]<<" "<<triangles[3*idx+2]<<" | ";
-        //std::cout<<adj[3*idx+ 0]<<" "<<adj[3*idx+ 1]<<" "<<adj[3*idx+ 2]<<" | "<<std::endl;
+        std::cout<<idx<<" | "<<triangles[3*idx+0]<<" "<<triangles[3*idx+1]<<" "<<triangles[3*idx+2]<<" | ";
+        std::cout<<adj[3*idx+ 0]<<" "<<adj[3*idx+ 1]<<" "<<adj[3*idx+ 2]<<" | "<<std::endl;
         idx++;
     }
 	delete Tr;
@@ -156,6 +156,16 @@ int main(int argc, char* argv[]){
 
 	for(i = 0; i < tnumber; i++){
 		visited[i] = FALSE;
+	}
+
+
+	for(i = 0; i < tnumber; i++){
+		for(j = 0; j < 3; j++)
+			if(adj[3*i +j] != -1 && is_max_max(i, adj[3*i + j], triangles, max) == TRUE && visited[adj[3*i + j]] == FALSE ){
+				if(adj[3*i + j] < i)
+					visited[i] = TRUE;
+					break;
+			}
 	}
 
 	for(i = 0; i < tnumber; i++)
@@ -189,45 +199,63 @@ int main(int argc, char* argv[]){
 				adj[3*i + j] = NO_ADJ;
 			}
 
-
-			if(adj[3*i +j] >= 0 && is_max_max(i, adj[3*i + j], triangles, max) && visited[adj[3*i + j]] == FALSE){
-				visited[i] = TRUE;
-			}
-
 			//Puntos en el borde
 			if(adj[3*i +j] < 0){
 				border_point.push_back(triangles[3*i + (j+1 %3)]);
 				border_point.push_back(triangles[3*i + (j+2 %3)]);
 			}
 		}
+		
 	}
+	
+
+	for (i = 0; i < tnumber; i++)
+		std::cout<<adj[3*i+0]<<" "<<adj[3*i+1]<<" "<<adj[3*i+2]<<"\n";
+
+	
 	free(max);
 	auto te_label =std::chrono::high_resolution_clock::now();
-	 
-	//debug_block(print_poly(root_id, tnumber););
-
-	//medir tiempo
+	
+	int count = 0;
+	for (i = 0; i < tnumber; i++)
+	{	
+		if(visited[i] == TRUE){
+			visited[count] = i;
+			count++;
+		}
+		
+	}
+	for (i = 0; i < count; i++)
+	{
+		std::cout<<visited[i]<<" ";
+	}
+	std::cout<<"\ncount = "<<count<<std::endl;
     
+	int aux_text = 0;
 
 	debug_msg("Etapa 5: Generar poligonos\n");
-	for(i = 0; i < tnumber; i++)
+	
+	for(int k = 0; k < count; k++)
 	{
 		/*busca fronter edge en un triangulo, hacer función está wea*/
 
 		/* si tiene 2-3 froint edge y no ha sido visitado*/
 		//AGREGAR LA CONDICION DE QUE SI ROOT_ID = -1 ENTONCES NO GENERA POLY, MARCAR_ID[ALGO] == -1 DESPUES DE GENERAR C/POLY!!!
-		int num_FrontierEdges = count_FrontierEdges(i, adj);
+		//int num_FrontierEdges = count_FrontierEdges(i, adj);
 		//if(!visited[i] && num_FrontierEdges > 0){
-		if(visited[i] == TRUE){
-
+		//if(visited[i] == TRUE){
+			i = visited[k];
+			int poly[1000];
 			chose_seed_triangle[id_chose_seed_triangle] = i;
 			id_chose_seed_triangle++;
 
 			length_poly = generate_polygon(poly, triangles, adj, r, visited, i);
+			aux_text += length_poly + 1;
+			std::cout<<length_poly<<": ";
 			num_BE = count_BarrierEdges(poly, length_poly);
 			
-			//save_to_mesh(mesh, poly, &i_mesh, length_poly, pos_poly, &id_pos_poly);	
-			
+			save_to_mesh(mesh, poly, &i_mesh, length_poly, pos_poly, &id_pos_poly);	
+
 			if(num_BE>0){
 				//printf("%d %d\n", num_BE, length_poly);
 				est_total_be += num_BE;
@@ -237,7 +265,7 @@ int main(int argc, char* argv[]){
 				est_ratio_be += (float)num_BE/length_poly;
 
 			}
-
+			/*
 			debug_msg("Poly: "); debug_block(print_poly(poly, length_poly););
 			if( num_BE > 0){
 				debug_print("Se dectecto %d BE\n", num_BE);
@@ -249,14 +277,19 @@ int main(int argc, char* argv[]){
 				debug_msg("Guardando poly\n");
 				save_to_mesh(mesh, poly, &i_mesh, length_poly, pos_poly, &id_pos_poly);	
 			}
-		}
+			*/
+			for (i = 0; i < length_poly; i++)
+			{
+				std::cout<<poly[i] <<" ";
+			}
+			std::cout<<"\n";
+			
+		
 	}
-
+	
 	auto t2 = std::chrono::high_resolution_clock::now();
 
-	
-	
-
+	std::cout<<"cu_ind_mesh = "<<aux_text<<std::endl;
 	
 	write_geomview(r,triangles, pnumber, tnumber,i_mesh, mesh, id_pos_poly, pos_poly, print_triangles, ppath, chose_seed_triangle, id_chose_seed_triangle, border_point);
 
@@ -290,7 +323,7 @@ int main(int argc, char* argv[]){
 	free(visited );
 	free(chose_seed_triangle);
 	free(mesh);
-	free(poly);
+	
 	free(pos_poly);
     
 	return EXIT_SUCCESS;
