@@ -124,16 +124,18 @@ int main(int argc, char* argv[]){
         adj[3*idx+ 0] = tri->nei[0].tri->idx;
         adj[3*idx+ 1] = tri->nei[1].tri->idx;
         adj[3*idx+ 2] = tri->nei[2].tri->idx;
-        std::cout<<idx<<" | "<<triangles[3*idx+0]<<" "<<triangles[3*idx+1]<<" "<<triangles[3*idx+2]<<" | ";
-        std::cout<<adj[3*idx+ 0]<<" "<<adj[3*idx+ 1]<<" "<<adj[3*idx+ 2]<<" | "<<std::endl;
+        //std::cout<<idx<<" | "<<triangles[3*idx+0]<<" "<<triangles[3*idx+1]<<" "<<triangles[3*idx+2]<<" | ";
+        //std::cout<<adj[3*idx+ 0]<<" "<<adj[3*idx+ 1]<<" "<<adj[3*idx+ 2]<<" | "<<std::endl;
         idx++;
     }
 	delete Tr;
 
-	
-	auto t1 = std::chrono::high_resolution_clock::now();
-	//std::cout<<tnumber<<" "<<pnumber<<" "<<std::endl;
 
+	for(i = 0; i < tnumber; i++){
+		visited[i] = FALSE;
+	}
+
+	auto t1 = std::chrono::high_resolution_clock::now();
 	auto tb_label =std::chrono::high_resolution_clock::now();
 	/* Etapa 1: Encontrar aristas máximas. */
 	debug_msg("Etapa 1: Encontrar aristas máximas. \n");
@@ -152,11 +154,6 @@ int main(int argc, char* argv[]){
 	int num_frontier_edges=0;
 	int num_frontier_border_edges=0;
 	int num_interior_edges=0;
-
-
-	for(i = 0; i < tnumber; i++){
-		visited[i] = FALSE;
-	}
 
 
 	for(i = 0; i < tnumber; i++){
@@ -208,34 +205,15 @@ int main(int argc, char* argv[]){
 		
 	}
 	
-
-	for (i = 0; i < tnumber; i++)
-		std::cout<<adj[3*i+0]<<" "<<adj[3*i+1]<<" "<<adj[3*i+2]<<"\n";
-
-	
+	auto te_label =std::chrono::high_resolution_clock::now();	
 	free(max);
-	auto te_label =std::chrono::high_resolution_clock::now();
-	
-	int count = 0;
-	for (i = 0; i < tnumber; i++)
-	{	
-		if(visited[i] == TRUE){
-			visited[count] = i;
-			count++;
-		}
-		
-	}
-	for (i = 0; i < count; i++)
-	{
-		std::cout<<visited[i]<<" ";
-	}
-	std::cout<<"\ncount = "<<count<<std::endl;
-    
-	int aux_text = 0;
 
+   
+	int aux_text = 0;
 	debug_msg("Etapa 5: Generar poligonos\n");
-	
-	for(int k = 0; k < count; k++)
+
+	auto tb_travel = std::chrono::high_resolution_clock::now();
+	for(int i = 0; i < tnumber; i++)
 	{
 		/*busca fronter edge en un triangulo, hacer función está wea*/
 
@@ -243,28 +221,28 @@ int main(int argc, char* argv[]){
 		//AGREGAR LA CONDICION DE QUE SI ROOT_ID = -1 ENTONCES NO GENERA POLY, MARCAR_ID[ALGO] == -1 DESPUES DE GENERAR C/POLY!!!
 		//int num_FrontierEdges = count_FrontierEdges(i, adj);
 		//if(!visited[i] && num_FrontierEdges > 0){
-		//if(visited[i] == TRUE){
-			i = visited[k];
+		if(visited[i] == TRUE){
+		//	i = visited[k];
 			int poly[1000];
-			chose_seed_triangle[id_chose_seed_triangle] = i;
-			id_chose_seed_triangle++;
+			//chose_seed_triangle[id_chose_seed_triangle] = i;
+			//id_chose_seed_triangle++;
 
 			length_poly = generate_polygon(poly, triangles, adj, r, visited, i);
-			aux_text += length_poly + 1;
-			std::cout<<length_poly<<": ";
+			//aux_text += length_poly + 1;
+			//std::cout<<length_poly<<": ";
 			num_BE = count_BarrierEdges(poly, length_poly);
 			
 			save_to_mesh(mesh, poly, &i_mesh, length_poly, pos_poly, &id_pos_poly);	
 
-			if(num_BE>0){
-				//printf("%d %d\n", num_BE, length_poly);
-				est_total_be += num_BE;
-				est_min_triangles_be = (num_BE < est_min_triangles_be) ? num_BE : est_min_triangles_be;
-				est_max_triangles_be = (num_BE > est_max_triangles_be) ? num_BE : est_max_triangles_be;
-				est_poly_with_be++;
-				est_ratio_be += (float)num_BE/length_poly;
-
-			}
+//			if(num_BE>0){
+//				//printf("%d %d\n", num_BE, length_poly);
+//				est_total_be += num_BE;
+//				est_min_triangles_be = (num_BE < est_min_triangles_be) ? num_BE : est_min_triangles_be;
+//				est_max_triangles_be = (num_BE > est_max_triangles_be) ? num_BE : est_max_triangles_be;
+//				est_poly_with_be++;
+//				est_ratio_be += (float)num_BE/length_poly;
+//
+//			}
 			/*
 			debug_msg("Poly: "); debug_block(print_poly(poly, length_poly););
 			if( num_BE > 0){
@@ -278,52 +256,35 @@ int main(int argc, char* argv[]){
 				save_to_mesh(mesh, poly, &i_mesh, length_poly, pos_poly, &id_pos_poly);	
 			}
 			*/
-			for (i = 0; i < length_poly; i++)
-			{
-				std::cout<<poly[i] <<" ";
-			}
-			std::cout<<"\n";
-			
+//			for (i = 0; i < length_poly; i++)
+//			{
+//				std::cout<<poly[i] <<" ";
+//			}
+//			std::cout<<"\n";
+		}
 		
 	}
-	
+	auto te_travel = std::chrono::high_resolution_clock::now();
+
 	auto t2 = std::chrono::high_resolution_clock::now();
 
 	std::cout<<"cu_ind_mesh = "<<aux_text<<std::endl;
 	
 	write_geomview(r,triangles, pnumber, tnumber,i_mesh, mesh, id_pos_poly, pos_poly, print_triangles, ppath, chose_seed_triangle, id_chose_seed_triangle, border_point);
 
-	int edges = pos_poly[0];
-	int est_max_edges = edges;
-	int est_min_edges = edges;
-	int est_total_edges= edges;
-	for(i = 1; i< id_pos_poly; i ++){
-		edges = (pos_poly[i] - pos_poly[i-1]);
-		est_max_edges = edges > est_max_edges ? edges : est_max_edges;
-		est_min_edges = edges < est_min_edges ? edges : est_min_edges;
-		est_total_edges += edges;
-		
-	}
 	std::cout << std::setprecision(3) << std::fixed;
-    std::cout <<"pnumber tnumber num_reg poly_be total_be min_poly_be max_poly_be ratio_be_per_poly total_edges max_edges min_edges edges_by_poly  num_terminal_edges num_terminal_border_edges num_frontier_edges num_frontier_border_edges num_interior_edges tdelaunay tlabel talgorithm ttraveandtopt ttravelalone topt"<<std::endl;
+    std::cout <<"pnumber tnumber num_reg tlabel talgorithm ttravel"<<std::endl;
 	std::cout<<pnumber<<" "<<tnumber<<" "<<id_pos_poly;
-	std::cout<<" "<<est_poly_with_be<<" "<<est_total_be<<" "<<est_min_triangles_be<<" "<<est_max_triangles_be;
-	std::cout<<" "<<(est_poly_with_be > 0 ? est_ratio_be/est_poly_with_be : 0.0);
-	std::cout<<" "<<est_total_edges<<" "<<est_max_edges<<" "<<est_min_edges<<" "<<(float)est_total_edges/id_pos_poly;
-	std::cout<<" "<<num_terminal_edges/2<<" "<<num_terminal_border_edges<<" "<<num_frontier_edges/2<<" "<<num_frontier_border_edges<<" "<<num_interior_edges/2;
-	std::cout<<" "<<std::chrono::duration_cast<std::chrono::milliseconds>(te_delaunay - tb_delaunay).count();
 	std::cout<<" "<<std::chrono::duration_cast<std::chrono::milliseconds>(te_label - tb_label).count();
 	std::cout<<" "<<std::chrono::duration_cast<std::chrono::milliseconds>(t2 - t1 ).count();
-	std::cout<<" "<<std::chrono::duration_cast<std::chrono::milliseconds>(t2 - t1 ).count() - tcost_be;
-	std::cout<<" "<<tcost_be<<std::endl;
-	//std::cout<<3*pnumber - 3 - (num_terminal_border_edges + num_frontier_border_edges) <<" = "<<num_terminal_edges/2 + num_terminal_border_edges + num_frontier_edges/2 + num_frontier_border_edges + num_interior_edges/2<<" "<<(3*pnumber - 3 - (num_terminal_border_edges + num_frontier_border_edges) == num_terminal_edges/2 + num_terminal_border_edges + num_frontier_edges/2 + num_frontier_border_edges + num_interior_edges/2)<<std::endl;
+	std::cout<<" "<<std::chrono::duration_cast<std::chrono::milliseconds>(te_travel - tb_travel ).count();
+
 	free(r);
 	free(triangles);
 	free(adj);
 	free(visited );
 	free(chose_seed_triangle);
 	free(mesh);
-	
 	free(pos_poly);
     
 	return EXIT_SUCCESS;
