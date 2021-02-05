@@ -32,8 +32,7 @@
 /*geomview output*/
 void write_geomview(double *r, int *p,  int pnumber,
 									int tnumber, int ind_poly, 
-									int *polygon, int id_start_poly,int *start_polygon, int print_triangles, char *ppath,
-									int *chose_seed_triangle, int id_chose_seed_triangle, std::vector<int> border_point){
+									int *polygon, int id_start_poly,int *start_polygon, int print_triangles, char *ppath){
 
 	int i,j;
 	char cmd[1024] = "\0";
@@ -118,13 +117,7 @@ void write_geomview(double *r, int *p,  int pnumber,
 		fprintf(fptr," }\n");
 		fprintf(fptr," }\n");
 	}
-	std::sort( border_point.begin(), border_point.end() );
-	border_point.erase( std::unique( border_point.begin(), border_point.end() ), border_point.end() );
-	fprintf(fptr,"#Border vertices\n#");
-	for ( i=0; i<border_point.size(); i++)
-	{
-		fprintf(fptr,"%d ", border_point[i]);
-	}
+	
 	fprintf(fptr,"\n");
     fclose(fptr);
 //printf("%d %d %d", 6.928203230275509 == 6.928203230275509, 6.928203230275509 > 6.928203230275509, 6.928203230275509 >= 6.928203230275509);
