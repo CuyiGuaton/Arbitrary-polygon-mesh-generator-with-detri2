@@ -1,4 +1,4 @@
-void save_to_mesh(int *mesh, int *poly, int *i_mesh, int length_poly, int *pos_poly, int *id_pos_poly);
+int save_to_mesh(int *mesh, int *poly, int i_mesh, int length_poly);
 int generate_polygon(int * poly, int * triangles, int * adj, double *r, int * visited, int i);
 int count_BarrierEdges(int *poly, int length_poly);
 int get_vertex_BarrierEdge(int *poly, int length_poly);
@@ -7,5 +7,5 @@ void split_poly(int *original_poly, int length_poly, int *poly1, int *length_pol
 void print_poly(int *poly, int length_poly);
 int copy_poly(int *in, int *out, int len);
 int optimice_partition_polygon(int *t_original, int v_be, int *poly, int length_poly, int *poly1, int *length_poly1, int *poly2, int *length_poly2, int num_BE, int *triangles, int *adj, double *r, int tnumber);
-void remove_BarrierEdge(int *poly, int length_poly, int num_BE, int *triangles, int *adj, double *r, int tnumber, int *mesh, int *i_mesh, int *pos_poly, int *id_pos_poly, int *visited);
+//void remove_BarrierEdge(int *poly, int length_poly, int num_BE, int *triangles, int *adj, double *r, int tnumber, int *mesh, int *i_mesh, int *pos_poly, int *id_pos_poly, int *visited);
 int is_BarrierEdge(int i, int *adj, int *adj_copy, int *root_id);

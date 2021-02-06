@@ -57,7 +57,7 @@ int main(int argc, char* argv[]){
     int *seed;
     int *max;
 	int *mesh;
-	std::vector<int> border_point;
+	
 
 	r = (double *)malloc(2*tnumber*sizeof(double));
     triangles =   (int *)malloc(3*tnumber*sizeof(int));
@@ -168,8 +168,8 @@ int main(int argc, char* argv[]){
 	{
 		for(j = 0; j < 3; j++)
 		{
-			//Datos estadisticos
-			//Borderedge and frontieredge
+			//Datos estadisticos, hay estadisticas que están mal, verificar
+			//Borderedge and frontieredge, siento que esta wea está mala
 			if(adj[3*i +j] < 0){
 				if (j == max[i])
 					num_terminal_border_edges++;
@@ -208,19 +208,16 @@ int main(int argc, char* argv[]){
 
 	auto tb_travel = std::chrono::high_resolution_clock::now();
 	debug_msg("Etapa 5: Generar poligonos\n");
+	int poly[1000];	
 	for(i = 0; i < tnumber; i++)
 	{
-		
-		int num_FrontierEdges = count_FrontierEdges(i, adj);
-		if(seed[i] == TRUE ){
-
-			int poly[1000];
+		if(seed[i] == TRUE ){			
 
 			length_poly = generate_polygon(poly, triangles, adj, r, seed, i);
 			num_BE = count_BarrierEdges(poly, length_poly);
 			
-			//save_to_mesh(mesh, poly, &i_mesh, length_poly, pos_poly, &id_pos_poly);	
-			
+			i_mesh = save_to_mesh(mesh, poly, i_mesh, length_poly);	
+					
 			if(num_BE>0){
 				//printf("%d %d\n", num_BE, length_poly);
 				est_total_be += num_BE;
@@ -230,7 +227,7 @@ int main(int argc, char* argv[]){
 				est_ratio_be += (float)num_BE/length_poly;
 
 			}
-
+		/*
 			debug_msg("Poly: "); debug_block(print_poly(poly, length_poly););
 			if( num_BE > 0){
 				debug_print("Se dectecto %d BE\n", num_BE);
@@ -242,14 +239,22 @@ int main(int argc, char* argv[]){
 				debug_msg("Guardando poly\n");
 				save_to_mesh(mesh, poly, &i_mesh, length_poly, pos_poly, &id_pos_poly);	
 			}
+		*/
 		}
 	}
 
 	auto t2 = std::chrono::high_resolution_clock::now();
 
 	
-	
-	write_geomview(r,triangles, pnumber, tnumber,i_mesh, mesh, id_pos_poly, pos_poly, print_triangles, ppath);
+	int num_region = 0;
+	for (i = 0; i < tnumber; i++)
+	{	
+		if(seed[i] == TRUE){
+			num_region++;
+		}
+	}
+
+	write_geomview(r, triangles, pnumber, tnumber, i_mesh, mesh, seed, num_region, 0);
 
 	int edges = pos_poly[0];
 	int est_max_edges = edges;

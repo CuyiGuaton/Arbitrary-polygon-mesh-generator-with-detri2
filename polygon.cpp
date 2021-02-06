@@ -1,5 +1,6 @@
 /* Funciones para manejar poligonos. */
 
+#include <iostream>
 #include <stdlib.h>
 #include <stdio.h>
 #include <math.h>
@@ -63,7 +64,7 @@ int is_BarrierEdge(int i, int *adj, int *adj_copy, int *root_id){
     }
     return 0;
 }
-
+/*
 void remove_BarrierEdge(int *poly, int length_poly, int num_BE, int *triangles, int *adj, double *r, int tnumber, int *mesh, int *i_mesh, int *pos_poly, int *id_pos_poly, int *visited){
 
     debug_msg("Removiendo barrier edge de "); debug_block(print_poly(poly, length_poly););
@@ -123,7 +124,7 @@ void remove_BarrierEdge(int *poly, int length_poly, int num_BE, int *triangles, 
     free(poly1);
     free(poly2);
 }
-
+*/
 
 /* Dado un poly con barrier edges
 Optimiza la división de este y devuelve poly1 y poly2*/
@@ -284,15 +285,17 @@ double get_signed_area_poly(int *poly, int length_poly, double *r){
 }
 
 
-void save_to_mesh(int *mesh, int *poly, int *i_mesh, int length_poly, int *pos_poly, int *id_pos_poly){
+int save_to_mesh(int *mesh, int *poly, int i_mesh, int length_poly){    
+
+    mesh[i_mesh] = length_poly;
     
-    int i;
-    for (i = 0; i < length_poly; i++){        
-        mesh[*i_mesh + i] = poly[i];
+    i_mesh++;
+    for(int i = 0; i <length_poly; i++){
+        mesh[i_mesh + i] = poly[i];
+        std::cout<<mesh[i_mesh + i]<<" ";
     }
-    *i_mesh += length_poly;
-    pos_poly[*id_pos_poly] = *i_mesh;
-	*id_pos_poly = *id_pos_poly + 1;
+    
+    return i_mesh + length_poly;
 }
 
 

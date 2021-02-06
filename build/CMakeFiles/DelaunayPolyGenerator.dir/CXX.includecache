@@ -6,9 +6,43 @@
 
 #IncludeRegexTransform: 
 
+../detri2/detri2.h
+
 /home/cuyi/Dropbox/Doctorado/paper_examen/algo_with_detri2/consts.h
 
+/home/cuyi/Dropbox/Doctorado/paper_examen/algo_with_detri2/io.h
+
+/home/cuyi/Dropbox/Doctorado/paper_examen/algo_with_detri2/main.cpp
+iostream
+-
+stdio.h
+-
+stdlib.h
+-
+detri2.h
+/home/cuyi/Dropbox/Doctorado/paper_examen/algo_with_detri2/detri2.h
+polymesh.h
+/home/cuyi/Dropbox/Doctorado/paper_examen/algo_with_detri2/polymesh.h
+vector
+-
+chrono
+-
+iomanip
+-
+cstdlib
+-
+io.h
+/home/cuyi/Dropbox/Doctorado/paper_examen/algo_with_detri2/io.h
+consts.h
+/home/cuyi/Dropbox/Doctorado/paper_examen/algo_with_detri2/consts.h
+triang.h
+/home/cuyi/Dropbox/Doctorado/paper_examen/algo_with_detri2/triang.h
+polygon.h
+/home/cuyi/Dropbox/Doctorado/paper_examen/algo_with_detri2/polygon.h
+
 /home/cuyi/Dropbox/Doctorado/paper_examen/algo_with_detri2/polygon.cpp
+iostream
+-
 stdlib.h
 -
 stdio.h
@@ -23,6 +57,10 @@ polygon.h
 /home/cuyi/Dropbox/Doctorado/paper_examen/algo_with_detri2/polygon.h
 
 /home/cuyi/Dropbox/Doctorado/paper_examen/algo_with_detri2/polygon.h
+
+/home/cuyi/Dropbox/Doctorado/paper_examen/algo_with_detri2/polymesh.h
+math.h
+-
 
 /home/cuyi/Dropbox/Doctorado/paper_examen/algo_with_detri2/triang.h
 
