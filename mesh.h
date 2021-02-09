@@ -1,0 +1,1 @@
+int count_regions(int *mesh, int i_mesh);

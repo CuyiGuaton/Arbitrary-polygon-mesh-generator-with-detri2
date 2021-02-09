@@ -64,8 +64,8 @@ int is_BarrierEdge(int i, int *adj, int *adj_copy, int *root_id){
     }
     return 0;
 }
-/*
-void remove_BarrierEdge(int *poly, int length_poly, int num_BE, int *triangles, int *adj, double *r, int tnumber, int *mesh, int *i_mesh, int *pos_poly, int *id_pos_poly, int *visited){
+
+int remove_BarrierEdge(int *poly, int length_poly, int num_BE, int *triangles, int *adj, double *r, int tnumber, int *mesh, int i_mesh){
 
     debug_msg("Removiendo barrier edge de "); debug_block(print_poly(poly, length_poly););
 
@@ -92,8 +92,8 @@ void remove_BarrierEdge(int *poly, int length_poly, int num_BE, int *triangles, 
     //solución, verificar si el triangulo que particiona es válido, sino se cambia.
 
 
-    length_poly1 = generate_polygon(poly1, triangles, adj, r, visited, t1);
-    length_poly2 = generate_polygon(poly2, triangles, adj, r, visited, t2);
+    length_poly1 = generate_polygon(t1, poly1, triangles, adj, r);
+    length_poly2 = generate_polygon(t2, poly2, triangles, adj, r);
 
     
     num_BE_poly1 = count_BarrierEdges(poly1, length_poly1);
@@ -101,30 +101,28 @@ void remove_BarrierEdge(int *poly, int length_poly, int num_BE, int *triangles, 
 
     debug_print("num_BE_poly1 %d, num_BE_poly2 %d\n", num_BE_poly1, num_BE_poly2);
 
-
-
-
     if(num_BE_poly1 > 0 && num_BE_poly2 == 0){						
         debug_msg("Guardando poly2 y enviando recursivamente poly1\n");
-        save_to_mesh(mesh, poly2, &(*i_mesh), length_poly2, pos_poly, &(*id_pos_poly));
-        remove_BarrierEdge(poly1, length_poly1, num_BE_poly1, triangles, adj, r, tnumber, mesh, &(*i_mesh), pos_poly, &(*id_pos_poly), visited);
+        i_mesh = save_to_mesh(mesh, poly2, i_mesh, length_poly2);	
+        i_mesh = remove_BarrierEdge(poly1, length_poly1, num_BE_poly1, triangles, adj, r, tnumber, mesh, i_mesh);
     }else if(num_BE_poly2 > 0 && num_BE_poly1 == 0){
         debug_msg("Guardando poly1 y enviando recursivamente poly2\n");
-        save_to_mesh(mesh, poly1, &(*i_mesh), length_poly1, pos_poly, &(*id_pos_poly));
-        remove_BarrierEdge(poly2, length_poly2, num_BE_poly2, triangles, adj, r, tnumber, mesh, &(*i_mesh), pos_poly, &(*id_pos_poly), visited);
+        i_mesh = save_to_mesh(mesh, poly1, i_mesh, length_poly1);	
+        i_mesh = remove_BarrierEdge(poly2, length_poly2, num_BE_poly2, triangles, adj, r, tnumber, mesh, i_mesh);
     }else if(num_BE_poly1 > 0 && num_BE_poly2 > 0){
         debug_msg("Enviando recursivamente poly1 y poly2\n");
-        remove_BarrierEdge(poly1, length_poly1, num_BE_poly1, triangles, adj, r, tnumber, mesh, &(*i_mesh), pos_poly, &(*id_pos_poly), visited);
-        remove_BarrierEdge(poly2, length_poly2, num_BE_poly2, triangles, adj, r, tnumber, mesh, &(*i_mesh), pos_poly, &(*id_pos_poly), visited);
+        i_mesh = remove_BarrierEdge(poly1, length_poly1, num_BE_poly1, triangles, adj, r, tnumber, mesh, i_mesh);
+        i_mesh = remove_BarrierEdge(poly2, length_poly2, num_BE_poly2, triangles, adj, r, tnumber, mesh, i_mesh);
     }else{
         debug_msg("Guardando poly1 y poly2\n");
-        save_to_mesh(mesh, poly1, &(*i_mesh), length_poly1, pos_poly, &(*id_pos_poly));
-        save_to_mesh(mesh, poly2, &(*i_mesh), length_poly2, pos_poly, &(*id_pos_poly));
+        i_mesh = save_to_mesh(mesh, poly1, i_mesh, length_poly1);	
+        i_mesh = save_to_mesh(mesh, poly2, i_mesh, length_poly2);	
     }
     free(poly1);
     free(poly2);
+    return i_mesh;
 }
-*/
+
 
 /* Dado un poly con barrier edges
 Optimiza la división de este y devuelve poly1 y poly2*/
@@ -222,7 +220,6 @@ int optimice_partition_polygon(int *t_original, int v_be, int *poly, int length_
 
 /* Divide un poly dado un vertice e1-e2
     resultados poly1 y poly*/
-
 void split_poly(int *original_poly, int length_poly, int *poly1, int *length_poly1, int *poly2, int *length_poly2, int e1, int e2){
     int pos1, pos2,i;
     pos1= -1;
@@ -292,7 +289,6 @@ int save_to_mesh(int *mesh, int *poly, int i_mesh, int length_poly){
     i_mesh++;
     for(int i = 0; i <length_poly; i++){
         mesh[i_mesh + i] = poly[i];
-        std::cout<<mesh[i_mesh + i]<<" ";
     }
     
     return i_mesh + length_poly;
@@ -328,7 +324,7 @@ int get_vertex_BarrierEdge(int *poly, int length_poly){
 }
 
 
-int generate_polygon(int * poly, int * triangles, int * adj, double *r, int * visited, int i) {
+int generate_polygon(int i, int * poly, int * triangles, int * adj, double *r) {
     int ind_poly = 0;
 	
 	int initial_point = 0;

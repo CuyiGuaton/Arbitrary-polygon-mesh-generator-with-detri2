@@ -1,5 +1,7 @@
+void generate_delaunay_from_random_points(int argc, char* argv[], int &pnumber, int &tnumber);
+void copy_delaunay_arrays(int tnumber, double *r, int* triangles, int* adj);
 /*
-Hoy: 
+Por hacer 
 
 int is_nomax_nomax(int i, int j, int *p, int *max);
 int is_max_max(int i, int j, int *p, int *max);
@@ -16,8 +18,8 @@ int search_prev_vertex_to_split(int i, int v, int origen, int *triangles, int *a
 int  get_edge(int i, int u, int v, int *p);
 */
 
-#include <math.h>
-#define NO_ADJ -1
+//#include <math.h>
+//#define NO_ADJ -1
 /*
 double dist(double x0, double y0, double x1, double y1);
 
@@ -25,17 +27,17 @@ double dist(double x0, double y0, double x1, double y1)
 {
 	return sqrt(pow(x0 - x1, 2.0) + pow(y0 - y1, 2.0));
 }
-*/
+
 //usar composición clases
 
 class TMesh : public detri2::Triangulation{
 
 public:
     detri2::Triangulation *trimesh;
-    int *max;
+    
     int tnumber;
     int pnumber;
-    bool *visited;
+    
     TMesh(int nparam, char* params[]){
         trimesh = new detri2::Triangulation();
         trimesh->parse_commands(nparam, params);
@@ -47,8 +49,7 @@ public:
         if (!trimesh->io_keep_unused) { // no -IJ
             this->pnumber -= trimesh->ct_unused_vrts;
         }
-        max = new int[tnumber];
-        visited = new bool[tnumber];
+    
     }
 
     ~TMesh(){
@@ -62,7 +63,6 @@ public:
         return (detri2::Triang *) trimesh->tr_tris->get(i);
     }
 
-/*
     int max_edge_index(int i);
     int is_nomax_nomax(int i, int j);
 
@@ -72,9 +72,9 @@ public:
             return -1;
         return i->vrt[0] == j->vrt[0] && i->vrt[1] == j->vrt[1] && i->vrt[2] == j->vrt[2];
     }
-*/
-};
 
+};
+*/
 /*
 int TMesh::is_nomax_nomax(int i, int j)
 {
@@ -134,7 +134,7 @@ int TMesh::max_edge_index(int i){
 }
 */
 
-
+/*
 void TMesh::print(){
     int idx = trimesh->io_firstindex;
 
@@ -174,3 +174,4 @@ void TMesh::print(){
     trimesh->save_neighbors();
     trimesh->save_triangulation();   
 }
+*/

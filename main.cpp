@@ -1,20 +1,18 @@
 #include <iostream>
 #include <stdio.h>   
 #include <stdlib.h>     /* exit, EXIT_FAILURE */
-#include "detri2.h"
-#include "polymesh.h"
 #include <vector> 
 #include <chrono>
 #include <iomanip>
 #include <cstdlib>
 
 
-
+#include "delaunay.h"
 #include "io.h"
 #include "consts.h"
 #include "triang.h"
 #include "polygon.h"
-
+#include "mesh.h"
 
 #ifdef DEBUG
 #define DEBUG_TEST 1
@@ -29,26 +27,18 @@
 
 int main(int argc, char* argv[]){
 
+	char* ppath;
+	int print_triangles = 0;
 
-    int nparam = 3;
+	// int nparam = 3;
     //char* params[] = {const_cast<char*> ("./detri2"), const_cast<char*> ("-z"), const_cast<char*> ("test.node")};
 	//char* params[] = {const_cast<char*> ("./detri2"), const_cast<char*> ("-z"), const_cast<char*> ("506randompoints.node")};
 	//char* params[] = {const_cast<char*> ("./detri2"), const_cast<char*> ("-z"), const_cast<char*> ("506equilateral.node")};
-    int print_triangles = 0;
-    char* ppath;
     //char* ppath = const_cast<char*> ("test");
-    //TMesh *Tr = new TMesh(nparam, params);    
-	auto tb_delaunay = std::chrono::high_resolution_clock::now();
-	TMesh *Tr = new TMesh(argc, argv);    
-	
-	auto te_delaunay = std::chrono::high_resolution_clock::now();
-    //Tr->print();
-    
 
 	//number elements
 	int tnumber, pnumber, i,j;
-	tnumber = Tr->tnumber;
-    pnumber = Tr->pnumber;
+	
 
 	//arrays inicilization
 	double *r;
@@ -58,15 +48,22 @@ int main(int argc, char* argv[]){
     int *max;
 	int *mesh;
 	
+	auto tb_delaunay = std::chrono::high_resolution_clock::now();
+	generate_delaunay_from_random_points(argc, argv, pnumber,tnumber);
+	auto te_delaunay = std::chrono::high_resolution_clock::now();
 
 	r = (double *)malloc(2*tnumber*sizeof(double));
-    triangles =   (int *)malloc(3*tnumber*sizeof(int));
-	adj =(int *)malloc(3*tnumber*sizeof(int));
+    triangles = (int *)malloc(3*tnumber*sizeof(int));
+	adj = (int *)malloc(3*tnumber*sizeof(int));
 	seed = (int *)malloc(tnumber*sizeof(int));
     max = (int *)malloc(tnumber*sizeof(int));
 	mesh = (int *)malloc(3*tnumber*sizeof(int));
+	
 
+	copy_delaunay_arrays(tnumber, r, triangles, adj);
 
+	
+	
 	//stats
 	int i_mesh = 0;	
 	int num_BE = 0;
@@ -76,60 +73,19 @@ int main(int argc, char* argv[]){
 	int est_poly_with_be = 0;
 	double est_ratio_be = 0;
 	int tcost_be = 0;
-
-
-	// Llamada a detr2 
-    int idx =0;
-    //copiar arreglo de vertices
-    //std::cout<<"pnumber "<<pnumber<<std::endl;
-    for (i = 0; i < Tr->trimesh->ct_in_vrts; i++) {
-        if (!Tr->trimesh->io_keep_unused) { // no -IJ
-            if (Tr->trimesh->in_vrts[i].typ == UNUSEDVERTEX) continue;
-        }
-        r[2*i + 0]= Tr->trimesh->in_vrts[i].crd[0];
-        r[2*i + 1]= Tr->trimesh->in_vrts[i].crd[1];
-        //std::cout<<idx<<" ("<<r[2*i + 0]<<", "<<r[2*i + 1]<<") "<<std::endl;
-        Tr->trimesh->in_vrts[i].idx = idx;
-        idx++;
-    }
-    idx = 0;
-    for (int i = 0; i < Tr->trimesh->tr_tris->used_items; i++) {
-        detri2::Triang* tri = (detri2::Triang *) Tr->trimesh->tr_tris->get(i);
-        if (tri->is_deleted()) continue;
-        if (tri->is_hulltri()) {
-            tri->idx = -1;
-        } else {
-            tri->idx = idx;
-            idx++;
-        }
-    }
-
-    //std::cout<<"tnumber: "<<Tr->trimesh->tr_tris->objects - Tr->trimesh->ct_hullsize<<std::endl;
-    idx = 0;
-    for (int i = 0; i < Tr->trimesh->tr_tris->used_items; i++)
-    {
-        
-        detri2::Triang* tri = (detri2::Triang *) Tr->trimesh->tr_tris->get(i);
-        if (tri->is_deleted() || tri->is_hulltri()) continue;
-        triangles[3*idx+0] = tri->vrt[0]->idx;
-        triangles[3*idx+1] = tri->vrt[1]->idx;
-        triangles[3*idx+2] = tri->vrt[2]->idx;
-        adj[3*idx+ 0] = tri->nei[0].tri->idx;
-        adj[3*idx+ 1] = tri->nei[1].tri->idx;
-        adj[3*idx+ 2] = tri->nei[2].tri->idx;
-        //std::cout<<idx<<" | "<<triangles[3*idx+0]<<" "<<triangles[3*idx+1]<<" "<<triangles[3*idx+2]<<" | ";
-        //std::cout<<adj[3*idx+ 0]<<" "<<adj[3*idx+ 1]<<" "<<adj[3*idx+ 2]<<" | "<<std::endl;
-        idx++;
-    }
-	delete Tr;
+	
 
 	//asignar valores
 	for(i = 0; i < tnumber; i++){
 		seed[i] = FALSE;
+		//for(j = 0; j<3;j++){
+		//	std::cout<<triangles[3*i+j]<<" ";
+		//}
+		//std::cout<<std::endl;
 	}
-
+	//std::cout<<"tnumber "<<tnumber<<std::endl;
 	auto t1 = std::chrono::high_resolution_clock::now();
-	
+
 
 	auto tb_label =std::chrono::high_resolution_clock::now();
 	/* Etapa 1: Encontrar aristas máximas. */
@@ -138,8 +94,8 @@ int main(int argc, char* argv[]){
 	{
 		max[i] = max_edge_index(i, r, triangles);
 	}
+//	std::cout<<"pase uwu"<<std::endl;	
 	
-	//elegir semillas
 	for(i = 0; i < tnumber; i++){
 		for(j = 0; j < 3; j++){
 			if(adj[3*i +j] != -1 && is_max_max(i, adj[3*i + j], triangles, max) == TRUE ){
@@ -157,7 +113,7 @@ int main(int argc, char* argv[]){
 
 	/* Etapa 2: Desconectar arcos asociados a aristas nomáx-nomáx. */
 	debug_msg("Etapa 2: Desconectar arcos asociados a aristas nomáx-nomáx. \n");
-
+	
 	int num_terminal_edges =0;
 	int num_terminal_border_edges=0;
 	int num_frontier_edges=0;
@@ -209,14 +165,15 @@ int main(int argc, char* argv[]){
 	auto tb_travel = std::chrono::high_resolution_clock::now();
 	debug_msg("Etapa 5: Generar poligonos\n");
 	int poly[1000];	
+	
 	for(i = 0; i < tnumber; i++)
 	{
 		if(seed[i] == TRUE ){			
 
-			length_poly = generate_polygon(poly, triangles, adj, r, seed, i);
+			length_poly = generate_polygon(i, poly, triangles, adj, r);
 			num_BE = count_BarrierEdges(poly, length_poly);
 			
-			i_mesh = save_to_mesh(mesh, poly, i_mesh, length_poly);	
+			//i_mesh = save_to_mesh(mesh, poly, i_mesh, length_poly);	
 					
 			if(num_BE>0){
 				//printf("%d %d\n", num_BE, length_poly);
@@ -227,32 +184,28 @@ int main(int argc, char* argv[]){
 				est_ratio_be += (float)num_BE/length_poly;
 
 			}
-		/*
+			
+		
 			debug_msg("Poly: "); debug_block(print_poly(poly, length_poly););
 			if( num_BE > 0){
-				debug_print("Se dectecto %d BE\n", num_BE);
+				//printf("Se dectecto %d BE\n", num_BE);
 				auto tb_be = std::chrono::high_resolution_clock::now();
-				remove_BarrierEdge(poly, length_poly, num_BE, triangles, adj, r, tnumber, mesh, &i_mesh, pos_poly, &id_pos_poly, seed);
+				i_mesh = remove_BarrierEdge(poly, length_poly, num_BE, triangles, adj, r, tnumber, mesh, i_mesh);
 				auto te_be = std::chrono::high_resolution_clock::now();
 				tcost_be += std::chrono::duration_cast<std::chrono::milliseconds>( te_be - tb_be ).count();
+				
 			}else{
 				debug_msg("Guardando poly\n");
-				save_to_mesh(mesh, poly, &i_mesh, length_poly, pos_poly, &id_pos_poly);	
+				i_mesh = save_to_mesh(mesh, poly, i_mesh, length_poly);	
+				
 			}
-		*/
+		
 		}
 	}
 
 	auto t2 = std::chrono::high_resolution_clock::now();
 
-	
-	int num_region = 0;
-	for (i = 0; i < tnumber; i++)
-	{	
-		if(seed[i] == TRUE){
-			num_region++;
-		}
-	}
+	int num_region = count_regions(mesh,i_mesh);
 
 	write_geomview(r, triangles, pnumber, tnumber, i_mesh, mesh, seed, num_region, 0);
 
