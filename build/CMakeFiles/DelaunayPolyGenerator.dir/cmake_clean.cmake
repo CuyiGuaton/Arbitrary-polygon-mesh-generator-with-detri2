@@ -1,6 +1,8 @@
 file(REMOVE_RECURSE
+  "CMakeFiles/DelaunayPolyGenerator.dir/delaunay.cpp.o"
   "CMakeFiles/DelaunayPolyGenerator.dir/io.cpp.o"
   "CMakeFiles/DelaunayPolyGenerator.dir/main.cpp.o"
+  "CMakeFiles/DelaunayPolyGenerator.dir/mesh.cpp.o"
   "CMakeFiles/DelaunayPolyGenerator.dir/polygon.cpp.o"
   "CMakeFiles/DelaunayPolyGenerator.dir/triang.cpp.o"
   "DelaunayPolyGenerator"

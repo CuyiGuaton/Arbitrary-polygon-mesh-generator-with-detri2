@@ -136,6 +136,33 @@ detri2/fast:
 	$(MAKE) -f detri2/CMakeFiles/detri2.dir/build.make detri2/CMakeFiles/detri2.dir/build
 .PHONY : detri2/fast
 
+delaunay.o: delaunay.cpp.o
+
+.PHONY : delaunay.o
+
+# target to build an object file
+delaunay.cpp.o:
+	$(MAKE) -f CMakeFiles/DelaunayPolyGenerator.dir/build.make CMakeFiles/DelaunayPolyGenerator.dir/delaunay.cpp.o
+.PHONY : delaunay.cpp.o
+
+delaunay.i: delaunay.cpp.i
+
+.PHONY : delaunay.i
+
+# target to preprocess a source file
+delaunay.cpp.i:
+	$(MAKE) -f CMakeFiles/DelaunayPolyGenerator.dir/build.make CMakeFiles/DelaunayPolyGenerator.dir/delaunay.cpp.i
+.PHONY : delaunay.cpp.i
+
+delaunay.s: delaunay.cpp.s
+
+.PHONY : delaunay.s
+
+# target to generate assembly for a file
+delaunay.cpp.s:
+	$(MAKE) -f CMakeFiles/DelaunayPolyGenerator.dir/build.make CMakeFiles/DelaunayPolyGenerator.dir/delaunay.cpp.s
+.PHONY : delaunay.cpp.s
+
 io.o: io.cpp.o
 
 .PHONY : io.o
@@ -189,6 +216,33 @@ main.s: main.cpp.s
 main.cpp.s:
 	$(MAKE) -f CMakeFiles/DelaunayPolyGenerator.dir/build.make CMakeFiles/DelaunayPolyGenerator.dir/main.cpp.s
 .PHONY : main.cpp.s
+
+mesh.o: mesh.cpp.o
+
+.PHONY : mesh.o
+
+# target to build an object file
+mesh.cpp.o:
+	$(MAKE) -f CMakeFiles/DelaunayPolyGenerator.dir/build.make CMakeFiles/DelaunayPolyGenerator.dir/mesh.cpp.o
+.PHONY : mesh.cpp.o
+
+mesh.i: mesh.cpp.i
+
+.PHONY : mesh.i
+
+# target to preprocess a source file
+mesh.cpp.i:
+	$(MAKE) -f CMakeFiles/DelaunayPolyGenerator.dir/build.make CMakeFiles/DelaunayPolyGenerator.dir/mesh.cpp.i
+.PHONY : mesh.cpp.i
+
+mesh.s: mesh.cpp.s
+
+.PHONY : mesh.s
+
+# target to generate assembly for a file
+mesh.cpp.s:
+	$(MAKE) -f CMakeFiles/DelaunayPolyGenerator.dir/build.make CMakeFiles/DelaunayPolyGenerator.dir/mesh.cpp.s
+.PHONY : mesh.cpp.s
 
 polygon.o: polygon.cpp.o
 
@@ -254,12 +308,18 @@ help:
 	@echo "... edit_cache"
 	@echo "... DelaunayPolyGenerator"
 	@echo "... detri2"
+	@echo "... delaunay.o"
+	@echo "... delaunay.i"
+	@echo "... delaunay.s"
 	@echo "... io.o"
 	@echo "... io.i"
 	@echo "... io.s"
 	@echo "... main.o"
 	@echo "... main.i"
 	@echo "... main.s"
+	@echo "... mesh.o"
+	@echo "... mesh.i"
+	@echo "... mesh.s"
 	@echo "... polygon.o"
 	@echo "... polygon.i"
 	@echo "... polygon.s"

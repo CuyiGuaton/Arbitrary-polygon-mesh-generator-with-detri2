@@ -60,61 +60,89 @@ include CMakeFiles/DelaunayPolyGenerator.dir/flags.make
 CMakeFiles/DelaunayPolyGenerator.dir/main.cpp.o: CMakeFiles/DelaunayPolyGenerator.dir/flags.make
 CMakeFiles/DelaunayPolyGenerator.dir/main.cpp.o: ../main.cpp
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/cuyi/Dropbox/Doctorado/paper_examen/algo_with_detri2/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/DelaunayPolyGenerator.dir/main.cpp.o"
-	/bin/g++-9  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/DelaunayPolyGenerator.dir/main.cpp.o -c /home/cuyi/Dropbox/Doctorado/paper_examen/algo_with_detri2/main.cpp
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/DelaunayPolyGenerator.dir/main.cpp.o -c /home/cuyi/Dropbox/Doctorado/paper_examen/algo_with_detri2/main.cpp
 
 CMakeFiles/DelaunayPolyGenerator.dir/main.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/DelaunayPolyGenerator.dir/main.cpp.i"
-	/bin/g++-9 $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/cuyi/Dropbox/Doctorado/paper_examen/algo_with_detri2/main.cpp > CMakeFiles/DelaunayPolyGenerator.dir/main.cpp.i
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/cuyi/Dropbox/Doctorado/paper_examen/algo_with_detri2/main.cpp > CMakeFiles/DelaunayPolyGenerator.dir/main.cpp.i
 
 CMakeFiles/DelaunayPolyGenerator.dir/main.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/DelaunayPolyGenerator.dir/main.cpp.s"
-	/bin/g++-9 $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/cuyi/Dropbox/Doctorado/paper_examen/algo_with_detri2/main.cpp -o CMakeFiles/DelaunayPolyGenerator.dir/main.cpp.s
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/cuyi/Dropbox/Doctorado/paper_examen/algo_with_detri2/main.cpp -o CMakeFiles/DelaunayPolyGenerator.dir/main.cpp.s
 
 CMakeFiles/DelaunayPolyGenerator.dir/polygon.cpp.o: CMakeFiles/DelaunayPolyGenerator.dir/flags.make
 CMakeFiles/DelaunayPolyGenerator.dir/polygon.cpp.o: ../polygon.cpp
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/cuyi/Dropbox/Doctorado/paper_examen/algo_with_detri2/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/DelaunayPolyGenerator.dir/polygon.cpp.o"
-	/bin/g++-9  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/DelaunayPolyGenerator.dir/polygon.cpp.o -c /home/cuyi/Dropbox/Doctorado/paper_examen/algo_with_detri2/polygon.cpp
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/DelaunayPolyGenerator.dir/polygon.cpp.o -c /home/cuyi/Dropbox/Doctorado/paper_examen/algo_with_detri2/polygon.cpp
 
 CMakeFiles/DelaunayPolyGenerator.dir/polygon.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/DelaunayPolyGenerator.dir/polygon.cpp.i"
-	/bin/g++-9 $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/cuyi/Dropbox/Doctorado/paper_examen/algo_with_detri2/polygon.cpp > CMakeFiles/DelaunayPolyGenerator.dir/polygon.cpp.i
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/cuyi/Dropbox/Doctorado/paper_examen/algo_with_detri2/polygon.cpp > CMakeFiles/DelaunayPolyGenerator.dir/polygon.cpp.i
 
 CMakeFiles/DelaunayPolyGenerator.dir/polygon.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/DelaunayPolyGenerator.dir/polygon.cpp.s"
-	/bin/g++-9 $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/cuyi/Dropbox/Doctorado/paper_examen/algo_with_detri2/polygon.cpp -o CMakeFiles/DelaunayPolyGenerator.dir/polygon.cpp.s
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/cuyi/Dropbox/Doctorado/paper_examen/algo_with_detri2/polygon.cpp -o CMakeFiles/DelaunayPolyGenerator.dir/polygon.cpp.s
 
 CMakeFiles/DelaunayPolyGenerator.dir/io.cpp.o: CMakeFiles/DelaunayPolyGenerator.dir/flags.make
 CMakeFiles/DelaunayPolyGenerator.dir/io.cpp.o: ../io.cpp
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/cuyi/Dropbox/Doctorado/paper_examen/algo_with_detri2/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/DelaunayPolyGenerator.dir/io.cpp.o"
-	/bin/g++-9  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/DelaunayPolyGenerator.dir/io.cpp.o -c /home/cuyi/Dropbox/Doctorado/paper_examen/algo_with_detri2/io.cpp
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/DelaunayPolyGenerator.dir/io.cpp.o -c /home/cuyi/Dropbox/Doctorado/paper_examen/algo_with_detri2/io.cpp
 
 CMakeFiles/DelaunayPolyGenerator.dir/io.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/DelaunayPolyGenerator.dir/io.cpp.i"
-	/bin/g++-9 $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/cuyi/Dropbox/Doctorado/paper_examen/algo_with_detri2/io.cpp > CMakeFiles/DelaunayPolyGenerator.dir/io.cpp.i
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/cuyi/Dropbox/Doctorado/paper_examen/algo_with_detri2/io.cpp > CMakeFiles/DelaunayPolyGenerator.dir/io.cpp.i
 
 CMakeFiles/DelaunayPolyGenerator.dir/io.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/DelaunayPolyGenerator.dir/io.cpp.s"
-	/bin/g++-9 $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/cuyi/Dropbox/Doctorado/paper_examen/algo_with_detri2/io.cpp -o CMakeFiles/DelaunayPolyGenerator.dir/io.cpp.s
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/cuyi/Dropbox/Doctorado/paper_examen/algo_with_detri2/io.cpp -o CMakeFiles/DelaunayPolyGenerator.dir/io.cpp.s
 
 CMakeFiles/DelaunayPolyGenerator.dir/triang.cpp.o: CMakeFiles/DelaunayPolyGenerator.dir/flags.make
 CMakeFiles/DelaunayPolyGenerator.dir/triang.cpp.o: ../triang.cpp
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/cuyi/Dropbox/Doctorado/paper_examen/algo_with_detri2/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/DelaunayPolyGenerator.dir/triang.cpp.o"
-	/bin/g++-9  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/DelaunayPolyGenerator.dir/triang.cpp.o -c /home/cuyi/Dropbox/Doctorado/paper_examen/algo_with_detri2/triang.cpp
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/DelaunayPolyGenerator.dir/triang.cpp.o -c /home/cuyi/Dropbox/Doctorado/paper_examen/algo_with_detri2/triang.cpp
 
 CMakeFiles/DelaunayPolyGenerator.dir/triang.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/DelaunayPolyGenerator.dir/triang.cpp.i"
-	/bin/g++-9 $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/cuyi/Dropbox/Doctorado/paper_examen/algo_with_detri2/triang.cpp > CMakeFiles/DelaunayPolyGenerator.dir/triang.cpp.i
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/cuyi/Dropbox/Doctorado/paper_examen/algo_with_detri2/triang.cpp > CMakeFiles/DelaunayPolyGenerator.dir/triang.cpp.i
 
 CMakeFiles/DelaunayPolyGenerator.dir/triang.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/DelaunayPolyGenerator.dir/triang.cpp.s"
-	/bin/g++-9 $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/cuyi/Dropbox/Doctorado/paper_examen/algo_with_detri2/triang.cpp -o CMakeFiles/DelaunayPolyGenerator.dir/triang.cpp.s
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/cuyi/Dropbox/Doctorado/paper_examen/algo_with_detri2/triang.cpp -o CMakeFiles/DelaunayPolyGenerator.dir/triang.cpp.s
+
+CMakeFiles/DelaunayPolyGenerator.dir/mesh.cpp.o: CMakeFiles/DelaunayPolyGenerator.dir/flags.make
+CMakeFiles/DelaunayPolyGenerator.dir/mesh.cpp.o: ../mesh.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/cuyi/Dropbox/Doctorado/paper_examen/algo_with_detri2/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/DelaunayPolyGenerator.dir/mesh.cpp.o"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/DelaunayPolyGenerator.dir/mesh.cpp.o -c /home/cuyi/Dropbox/Doctorado/paper_examen/algo_with_detri2/mesh.cpp
+
+CMakeFiles/DelaunayPolyGenerator.dir/mesh.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/DelaunayPolyGenerator.dir/mesh.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/cuyi/Dropbox/Doctorado/paper_examen/algo_with_detri2/mesh.cpp > CMakeFiles/DelaunayPolyGenerator.dir/mesh.cpp.i
+
+CMakeFiles/DelaunayPolyGenerator.dir/mesh.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/DelaunayPolyGenerator.dir/mesh.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/cuyi/Dropbox/Doctorado/paper_examen/algo_with_detri2/mesh.cpp -o CMakeFiles/DelaunayPolyGenerator.dir/mesh.cpp.s
+
+CMakeFiles/DelaunayPolyGenerator.dir/delaunay.cpp.o: CMakeFiles/DelaunayPolyGenerator.dir/flags.make
+CMakeFiles/DelaunayPolyGenerator.dir/delaunay.cpp.o: ../delaunay.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/cuyi/Dropbox/Doctorado/paper_examen/algo_with_detri2/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object CMakeFiles/DelaunayPolyGenerator.dir/delaunay.cpp.o"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/DelaunayPolyGenerator.dir/delaunay.cpp.o -c /home/cuyi/Dropbox/Doctorado/paper_examen/algo_with_detri2/delaunay.cpp
+
+CMakeFiles/DelaunayPolyGenerator.dir/delaunay.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/DelaunayPolyGenerator.dir/delaunay.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/cuyi/Dropbox/Doctorado/paper_examen/algo_with_detri2/delaunay.cpp > CMakeFiles/DelaunayPolyGenerator.dir/delaunay.cpp.i
+
+CMakeFiles/DelaunayPolyGenerator.dir/delaunay.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/DelaunayPolyGenerator.dir/delaunay.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/cuyi/Dropbox/Doctorado/paper_examen/algo_with_detri2/delaunay.cpp -o CMakeFiles/DelaunayPolyGenerator.dir/delaunay.cpp.s
 
 # Object files for target DelaunayPolyGenerator
 DelaunayPolyGenerator_OBJECTS = \
 "CMakeFiles/DelaunayPolyGenerator.dir/main.cpp.o" \
 "CMakeFiles/DelaunayPolyGenerator.dir/polygon.cpp.o" \
 "CMakeFiles/DelaunayPolyGenerator.dir/io.cpp.o" \
-"CMakeFiles/DelaunayPolyGenerator.dir/triang.cpp.o"
+"CMakeFiles/DelaunayPolyGenerator.dir/triang.cpp.o" \
+"CMakeFiles/DelaunayPolyGenerator.dir/mesh.cpp.o" \
+"CMakeFiles/DelaunayPolyGenerator.dir/delaunay.cpp.o"
 
 # External object files for target DelaunayPolyGenerator
 DelaunayPolyGenerator_EXTERNAL_OBJECTS =
@@ -123,10 +151,12 @@ DelaunayPolyGenerator: CMakeFiles/DelaunayPolyGenerator.dir/main.cpp.o
 DelaunayPolyGenerator: CMakeFiles/DelaunayPolyGenerator.dir/polygon.cpp.o
 DelaunayPolyGenerator: CMakeFiles/DelaunayPolyGenerator.dir/io.cpp.o
 DelaunayPolyGenerator: CMakeFiles/DelaunayPolyGenerator.dir/triang.cpp.o
+DelaunayPolyGenerator: CMakeFiles/DelaunayPolyGenerator.dir/mesh.cpp.o
+DelaunayPolyGenerator: CMakeFiles/DelaunayPolyGenerator.dir/delaunay.cpp.o
 DelaunayPolyGenerator: CMakeFiles/DelaunayPolyGenerator.dir/build.make
 DelaunayPolyGenerator: detri2/libdetri2.a
 DelaunayPolyGenerator: CMakeFiles/DelaunayPolyGenerator.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/cuyi/Dropbox/Doctorado/paper_examen/algo_with_detri2/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Linking CXX executable DelaunayPolyGenerator"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/cuyi/Dropbox/Doctorado/paper_examen/algo_with_detri2/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Linking CXX executable DelaunayPolyGenerator"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/DelaunayPolyGenerator.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
