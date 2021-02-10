@@ -1,2 +1,2 @@
-/usr/bin/ar qc libdetri2.a  CMakeFiles/detri2.dir/detri2.cpp.o CMakeFiles/detri2.dir/flips.cpp.o CMakeFiles/detri2.dir/pred3d.cpp.o CMakeFiles/detri2.dir/io.cpp.o CMakeFiles/detri2.dir/sort.cpp.o CMakeFiles/detri2.dir/delaunay.cpp.o CMakeFiles/detri2.dir/constrained.cpp.o CMakeFiles/detri2.dir/refine.cpp.o CMakeFiles/detri2.dir/voronoi.cpp.o CMakeFiles/detri2.dir/adapt.cpp.o CMakeFiles/detri2.dir/metric.cpp.o CMakeFiles/detri2.dir/main.cpp.o
-/usr/bin/ranlib libdetri2.a
+/bin/ar qc libdetri2.a  CMakeFiles/detri2.dir/detri2.cpp.o CMakeFiles/detri2.dir/flips.cpp.o CMakeFiles/detri2.dir/pred3d.cpp.o CMakeFiles/detri2.dir/io.cpp.o CMakeFiles/detri2.dir/sort.cpp.o CMakeFiles/detri2.dir/delaunay.cpp.o CMakeFiles/detri2.dir/constrained.cpp.o CMakeFiles/detri2.dir/refine.cpp.o CMakeFiles/detri2.dir/voronoi.cpp.o CMakeFiles/detri2.dir/adapt.cpp.o CMakeFiles/detri2.dir/metric.cpp.o CMakeFiles/detri2.dir/main.cpp.o
+/bin/ranlib libdetri2.a

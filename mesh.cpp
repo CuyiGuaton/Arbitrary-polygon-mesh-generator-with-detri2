@@ -7,3 +7,15 @@ int count_regions(int *mesh, int i_mesh){
     }
     return num_region;
 }
+
+int save_to_mesh(int *mesh, int *poly, int i_mesh, int length_poly){    
+
+    mesh[i_mesh] = length_poly;
+    
+    i_mesh++;
+    for(int i = 0; i <length_poly; i++){
+        mesh[i_mesh + i] = poly[i];
+    }
+    
+    return i_mesh + length_poly;
+}

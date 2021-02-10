@@ -4,7 +4,9 @@
 #include "detri2.h"
 
 detri2::Triangulation *trimesh;
-
+//Genenerates a Delaunay triangulation with detri2 from a random point set (file.node)
+//Input: arguments Detri2 x pnumber xtnumber
+//output: pnumber (point number Delunay triangulation), tnumber (number of triangles of triangulation)
 void generate_delaunay_from_random_points(int argc, char* argv[], int &pnumber, int &tnumber){
     trimesh = new detri2::Triangulation();
     trimesh->parse_commands(argc, argv);
@@ -19,8 +21,9 @@ void generate_delaunay_from_random_points(int argc, char* argv[], int &pnumber, 
 
 }
 
+//Fullfil arrays with delaunay triangulation data
+//Input: r (array of points), triangles(array of triangles), adj (array of neigh)
 void copy_delaunay_arrays(int tnumber, double *r, int* triangles, int* adj){
-
     int i, idx;
     // Llamada a detr2 
     //copiar arreglo de vertices

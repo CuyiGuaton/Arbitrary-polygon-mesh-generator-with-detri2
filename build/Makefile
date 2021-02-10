@@ -136,6 +136,33 @@ detri2/fast:
 	$(MAKE) -f detri2/CMakeFiles/detri2.dir/build.make detri2/CMakeFiles/detri2.dir/build
 .PHONY : detri2/fast
 
+BET_elimitation.o: BET_elimitation.cpp.o
+
+.PHONY : BET_elimitation.o
+
+# target to build an object file
+BET_elimitation.cpp.o:
+	$(MAKE) -f CMakeFiles/DelaunayPolyGenerator.dir/build.make CMakeFiles/DelaunayPolyGenerator.dir/BET_elimitation.cpp.o
+.PHONY : BET_elimitation.cpp.o
+
+BET_elimitation.i: BET_elimitation.cpp.i
+
+.PHONY : BET_elimitation.i
+
+# target to preprocess a source file
+BET_elimitation.cpp.i:
+	$(MAKE) -f CMakeFiles/DelaunayPolyGenerator.dir/build.make CMakeFiles/DelaunayPolyGenerator.dir/BET_elimitation.cpp.i
+.PHONY : BET_elimitation.cpp.i
+
+BET_elimitation.s: BET_elimitation.cpp.s
+
+.PHONY : BET_elimitation.s
+
+# target to generate assembly for a file
+BET_elimitation.cpp.s:
+	$(MAKE) -f CMakeFiles/DelaunayPolyGenerator.dir/build.make CMakeFiles/DelaunayPolyGenerator.dir/BET_elimitation.cpp.s
+.PHONY : BET_elimitation.cpp.s
+
 delaunay.o: delaunay.cpp.o
 
 .PHONY : delaunay.o
@@ -308,6 +335,9 @@ help:
 	@echo "... edit_cache"
 	@echo "... DelaunayPolyGenerator"
 	@echo "... detri2"
+	@echo "... BET_elimitation.o"
+	@echo "... BET_elimitation.i"
+	@echo "... BET_elimitation.s"
 	@echo "... delaunay.o"
 	@echo "... delaunay.i"
 	@echo "... delaunay.s"

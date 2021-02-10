@@ -13,6 +13,7 @@
 #include "triang.h"
 #include "polygon.h"
 #include "mesh.h"
+#include "BET_elimitation.h"
 
 #ifdef DEBUG
 #define DEBUG_TEST 1
@@ -61,8 +62,6 @@ int main(int argc, char* argv[]){
 	
 
 	copy_delaunay_arrays(tnumber, r, triangles, adj);
-
-	
 	
 	//stats
 	int i_mesh = 0;	
@@ -75,15 +74,11 @@ int main(int argc, char* argv[]){
 	int tcost_be = 0;
 	
 
-	//asignar valores
+	//initialize array
 	for(i = 0; i < tnumber; i++){
 		seed[i] = FALSE;
-		//for(j = 0; j<3;j++){
-		//	std::cout<<triangles[3*i+j]<<" ";
-		//}
-		//std::cout<<std::endl;
 	}
-	//std::cout<<"tnumber "<<tnumber<<std::endl;
+	
 	auto t1 = std::chrono::high_resolution_clock::now();
 
 
@@ -190,7 +185,7 @@ int main(int argc, char* argv[]){
 			if( num_BE > 0){
 				//printf("Se dectecto %d BE\n", num_BE);
 				auto tb_be = std::chrono::high_resolution_clock::now();
-				i_mesh = remove_BarrierEdge(poly, length_poly, num_BE, triangles, adj, r, tnumber, mesh, i_mesh);
+				i_mesh = removeBET_1_max_area(poly, length_poly, num_BE, triangles, adj, r, tnumber, mesh, i_mesh);
 				auto te_be = std::chrono::high_resolution_clock::now();
 				tcost_be += std::chrono::duration_cast<std::chrono::milliseconds>( te_be - tb_be ).count();
 				
