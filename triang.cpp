@@ -522,9 +522,13 @@ int get_adjacent_triangle_share_endpoint(int i, int origen, int endpoint, int *p
 	int p2 = p[3*i + 2];
 	
 	/* consigue los triangulos adyacentes */
-	int i0 = get_adjacent_triangle(i, p0, p1, p, adj);
-	int i1 = get_adjacent_triangle(i, p1, p2, p, adj);
-	int i2 = get_adjacent_triangle(i, p2, p0, p, adj);
+	//int i0 = get_adjacent_triangle(i, p0, p1, p, adj);
+	//int i1 = get_adjacent_triangle(i, p1, p2, p, adj);
+	//int i2 = get_adjacent_triangle(i, p2, p0, p, adj);
+
+	int i0 = adj[3*i + 2];
+	int i1 = adj[3*i + 0];
+	int i2 = adj[3*i + 1];
 
 	/*verifica si los triangulos son continuos al endpoint */
 	int ic0 = is_continuous(i0 ,endpoint, p);
@@ -634,6 +638,8 @@ int search_prev_vertex_to_split(int i, int v, int origen, int *triangles, int *a
     exit(0);
 	return -1;
 }
+
+
 
 int search_next_vertex_to_split(int i, int v, int origen, int *triangles, int *adj){
 	int t0, t1,t2;

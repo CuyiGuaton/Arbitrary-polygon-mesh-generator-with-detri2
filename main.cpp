@@ -181,7 +181,8 @@ int main(int argc, char* argv[]){
 			length_poly = generate_polygon(i, poly, triangles, adj, r);
 			num_BE = count_BarrierEdges(poly, length_poly);
 			
-		//	i_mesh = save_to_mesh(mesh, poly, i_mesh, length_poly);	
+		
+			//i_mesh = save_to_mesh(mesh, poly, i_mesh, length_poly);	
 					
 			if(num_BE>0){
 				//printf("%d %d\n", num_BE, length_poly);
