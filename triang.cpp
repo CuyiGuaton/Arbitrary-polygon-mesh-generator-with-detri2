@@ -556,11 +556,15 @@ int count_FrontierEdges(int triangle, int *adj){
 }
 
 
-/*ESta función es demasiado costosa, optimizar*/
+//Search a triangle asociated to a barrier-edge that contains vertex v
+//This doesnt use trivertex to find a triangle asociated to v, instead of, search in the list of the triangles one that containts v as frontier-edge
+//Input:  index vertex v, array of triangles, array of neigh, number of triangles, array that asociated each triangle to a vertex
+//output: index of triangle that have one frontier-edge that contains v
 int search_triangle_by_vertex_with_FrontierEdge(int v, int *triangles, int *adj, int tnumber){
 	int i,j;
 	for (i = 0; i < tnumber; i++)
 		for (j = 0; j < 3; j++){
+			//If the triangle contains v and has 2 fronter-edges
 			if(triangles[3*i +j] == v  && ( adj[3*i + ((j + 1)%3)] == -1 || adj[3*i + ((j + 2)%3)] == -1 )){
 				debug_print("v %d |t %d | Triangles %d %d %d | ADJ  %d %d %d\n", v, i, triangles[3*i + 0], triangles[3*i + 1], triangles[3*i + 2], adj[3*i + 0], adj[3*i + 1], adj[3*i + 2]);
 				return i;
@@ -571,6 +575,33 @@ int search_triangle_by_vertex_with_FrontierEdge(int v, int *triangles, int *adj,
     exit(0);
 	return -1;
 }
+
+//Search a triangle asociated to a barrier-edge that contains vertex v
+//This use trivertex to find a triangle asociated to v and travel through  adjacents triangles until find one with frontie-edges
+//Input:  index vertex v, array of triangles, array of neigh, number of triangles, array that asociated each triangle to a vertex
+//output: index of triangle that have one frontier-edge that contains v
+int search_triangle_by_vertex_with_FrontierEdge_from_trivertex(int v, int *triangles, int *adj, int tnumber, int* trivertex){
+	int t = trivertex[v];
+	int origen = -1;
+	int j, aux;
+	while (1)
+	{
+		for (j = 0; j < 3; j++){
+			//If the triangle contains v and has 2 fronter-edges
+			if(triangles[3*t +j] == v  && ( adj[3*t + ((j + 1)%3)] == -1 || adj[3*t + ((j + 2)%3)] == -1 ))
+				return t;
+		}
+		//avanza al siguiente triangulo
+		aux = t;
+        t = get_adjacent_triangle_share_endpoint(t, origen, v, triangles, adj);
+        origen = aux;
+
+	}	
+	fprintf(stderr,"%s:%d:%s() No se encontro triangulo que contiene el vertice %d \n",__FILE__,  __LINE__, __func__, v);
+    exit(0);
+	return -1;
+}
+
 
 int search_prev_vertex_to_split(int i, int v, int origen, int *triangles, int *adj){
 	int t0, t1,t2;

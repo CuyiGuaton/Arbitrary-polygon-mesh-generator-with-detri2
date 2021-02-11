@@ -29,7 +29,7 @@
 int main(int argc, char* argv[]){
 
 	char* ppath;
-	int print_triangles = 0;
+	int print_triangles = 1;
 
 	// int nparam = 3;
     //char* params[] = {const_cast<char*> ("./detri2"), const_cast<char*> ("-z"), const_cast<char*> ("test.node")};
@@ -48,21 +48,34 @@ int main(int argc, char* argv[]){
     int *seed;
     int *max;
 	int *mesh;
+	int *trivertex;
 	
 	auto tb_delaunay = std::chrono::high_resolution_clock::now();
 	generate_delaunay_from_random_points(argc, argv, pnumber,tnumber);
 	auto te_delaunay = std::chrono::high_resolution_clock::now();
 
-	r = (double *)malloc(2*tnumber*sizeof(double));
+	r = (double *)malloc(2*pnumber*sizeof(double)); // cambiar por pnumber
     triangles = (int *)malloc(3*tnumber*sizeof(int));
 	adj = (int *)malloc(3*tnumber*sizeof(int));
 	seed = (int *)malloc(tnumber*sizeof(int));
     max = (int *)malloc(tnumber*sizeof(int));
 	mesh = (int *)malloc(3*tnumber*sizeof(int));
-	
+	trivertex = (int *)malloc(pnumber*sizeof(int));
 
 	copy_delaunay_arrays(tnumber, r, triangles, adj);
 	
+	//Asociate each vertex to an adjacent  triangle
+	for(i = 0; i < pnumber; i++){
+		for (j = 0; j < tnumber; j++)
+		{
+			if(i == triangles[3*j + 0] ||  i == triangles[3*j + 1] || i == triangles[3*j + 2]){
+				trivertex[i] = j;
+				break;
+			}
+		}
+		//std::cout<<"trivertex["<<i<<"] "<<trivertex[i]<<std::endl;
+	}
+
 	//stats
 	int i_mesh = 0;	
 	int num_BE = 0;
@@ -168,7 +181,7 @@ int main(int argc, char* argv[]){
 			length_poly = generate_polygon(i, poly, triangles, adj, r);
 			num_BE = count_BarrierEdges(poly, length_poly);
 			
-			//i_mesh = save_to_mesh(mesh, poly, i_mesh, length_poly);	
+		//	i_mesh = save_to_mesh(mesh, poly, i_mesh, length_poly);	
 					
 			if(num_BE>0){
 				//printf("%d %d\n", num_BE, length_poly);
@@ -185,7 +198,7 @@ int main(int argc, char* argv[]){
 			if( num_BE > 0){
 				//printf("Se dectecto %d BE\n", num_BE);
 				auto tb_be = std::chrono::high_resolution_clock::now();
-				i_mesh = removeBET_1_max_area(poly, length_poly, num_BE, triangles, adj, r, tnumber, mesh, i_mesh);
+				i_mesh = removeBET_1_max_area(poly, length_poly, num_BE, triangles, adj, r, tnumber, mesh, i_mesh, trivertex);
 				auto te_be = std::chrono::high_resolution_clock::now();
 				tcost_be += std::chrono::duration_cast<std::chrono::milliseconds>( te_be - tb_be ).count();
 				
@@ -202,7 +215,7 @@ int main(int argc, char* argv[]){
 
 	int num_region = count_regions(mesh,i_mesh);
 
-	write_geomview(r, triangles, pnumber, tnumber, i_mesh, mesh, seed, num_region, 0);
+	write_geomview(r, triangles, pnumber, tnumber, i_mesh, mesh, seed, num_region, print_triangles);
 
 	int edges = pos_poly[0];
 	int est_max_edges = edges;

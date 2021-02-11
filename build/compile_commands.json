@@ -30,6 +30,11 @@
   "file": "/home/cuyi/Dropbox/Doctorado/paper_examen/algo_with_detri2/delaunay.cpp"
 },
 {
+  "directory": "/home/cuyi/Dropbox/Doctorado/paper_examen/algo_with_detri2/build",
+  "command": "/bin/g++-9   -I/home/cuyi/Dropbox/Doctorado/paper_examen/algo_with_detri2/detri2  -g   -o CMakeFiles/DelaunayPolyGenerator.dir/BET_elimitation.cpp.o -c /home/cuyi/Dropbox/Doctorado/paper_examen/algo_with_detri2/BET_elimitation.cpp",
+  "file": "/home/cuyi/Dropbox/Doctorado/paper_examen/algo_with_detri2/BET_elimitation.cpp"
+},
+{
   "directory": "/home/cuyi/Dropbox/Doctorado/paper_examen/algo_with_detri2/build/detri2",
   "command": "/bin/g++-9  -DUSING_GMP -I/home/cuyi/Dropbox/Doctorado/paper_examen/algo_with_detri2/detri2  -g   -o CMakeFiles/detri2.dir/detri2.cpp.o -c /home/cuyi/Dropbox/Doctorado/paper_examen/algo_with_detri2/detri2/detri2.cpp",
   "file": "/home/cuyi/Dropbox/Doctorado/paper_examen/algo_with_detri2/detri2/detri2.cpp"

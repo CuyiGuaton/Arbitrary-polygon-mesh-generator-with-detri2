@@ -16,3 +16,5 @@ int  get_edge(int i, int u, int v, int *p);
 int Equality(float a, float b, float epsilon);
 int GreaterEqualthan(float a, float b, float epsilon);
 int is_max_nomax(int i, int j, int *p, int *max);
+
+int search_triangle_by_vertex_with_FrontierEdge_from_trivertex(int v, int *triangles, int *adj, int tnumber, int* trivertex);
