@@ -20,9 +20,8 @@
 #define debug_msg(fmt) do { if (DEBUG_TEST) fprintf(stderr, "%s:%d:%s(): " fmt, __FILE__,  __LINE__, __func__); } while (0)
 
 
-/* Method 1 to split polygon, max area criteria */
-
-int removeBET_1_max_area(int *poly, int length_poly, int num_BE, int *triangles, int *adj, double *r, int tnumber, int *mesh, int i_mesh, int* trivertex){
+//Remove_BE
+int Remove_BE(int option, int *poly, int length_poly, int num_BE, int *triangles, int *adj, double *r, int tnumber, int *mesh, int i_mesh, int* trivertex){
 
     debug_msg("Removiendo barrier edge de "); debug_block(print_poly(poly, length_poly); );
 
@@ -37,10 +36,19 @@ int removeBET_1_max_area(int *poly, int length_poly, int num_BE, int *triangles,
 
 
     v_be = get_vertex_BarrierEdge(poly, length_poly);
-    //t1 = search_triangle_by_vertex_with_FrontierEdge(v_be, triangles, adj, tnumber);
-    t1 = search_triangle_by_vertex_with_FrontierEdge_from_trivertex(v_be, triangles, adj, tnumber, trivertex);
-    v_other = optimice_partition_polygon(&t1, v_be, poly, length_poly, poly1, &length_poly1, poly2, &length_poly2, num_BE, triangles, adj, r, tnumber);
-    t2 = get_adjacent_triangle(t1, v_other, v_be, triangles, adj);
+    
+    if(option == 0){
+        //t1 = search_triangle_by_vertex_with_FrontierEdge(v_be, triangles, adj, tnumber);
+        t1 = search_triangle_by_vertex_with_FrontierEdge_from_trivertex(v_be, triangles, adj, tnumber, trivertex);
+        v_other = optimice1_max_area_criteria(&t1, v_be, poly, length_poly, poly1, &length_poly1, poly2, &length_poly2, num_BE, triangles, adj, r, tnumber);
+        t2 = get_adjacent_triangle(t1, v_other, v_be, triangles, adj);
+    }else if(option == 1){
+        //t1 = search_triangle_by_vertex_with_FrontierEdge(v_be, triangles, adj, tnumber);
+        t1 = search_triangle_by_vertex_with_FrontierEdge_from_trivertex(v_be, triangles, adj, tnumber, trivertex);
+        v_other = optimice2_middle_edge(&t1, v_be, triangles, adj);
+        //printf("v %d, t %d  | Triangles %d %d %d | ADJ  %d %d %d\n", v_be, t1, triangles[3*t1 + 0], triangles[3*t1 + 1], triangles[3*t1 + 2], adj[3*t1 + 0], adj[3*t1 + 1], adj[3*t1 + 2]);
+        t2 = get_adjacent_triangle(t1, v_other, v_be, triangles, adj);
+    }
 
     debug_print("Eliminando arista de %d - %d de los triangulos  %d y %d", v_be, v_other, t1, t2);
     adj[3*t1 + get_edge(t1, v_be, v_other, triangles)] = NO_ADJ;
@@ -62,15 +70,15 @@ int removeBET_1_max_area(int *poly, int length_poly, int num_BE, int *triangles,
     if(num_BE_poly1 > 0 && num_BE_poly2 == 0){						
         debug_msg("Guardando poly2 y enviando recursivamente poly1\n");
         i_mesh = save_to_mesh(mesh, poly2, i_mesh, length_poly2);	
-        i_mesh = removeBET_1_max_area(poly1, length_poly1, num_BE_poly1, triangles, adj, r, tnumber, mesh, i_mesh, trivertex);
+        i_mesh = Remove_BE(option, poly1, length_poly1, num_BE_poly1, triangles, adj, r, tnumber, mesh, i_mesh, trivertex);
     }else if(num_BE_poly2 > 0 && num_BE_poly1 == 0){
         debug_msg("Guardando poly1 y enviando recursivamente poly2\n");
         i_mesh = save_to_mesh(mesh, poly1, i_mesh, length_poly1);	
-        i_mesh = removeBET_1_max_area(poly2, length_poly2, num_BE_poly2, triangles, adj, r, tnumber, mesh, i_mesh, trivertex);
+        i_mesh = Remove_BE(option, poly2, length_poly2, num_BE_poly2, triangles, adj, r, tnumber, mesh, i_mesh, trivertex);
     }else if(num_BE_poly1 > 0 && num_BE_poly2 > 0){
         debug_msg("Enviando recursivamente poly1 y poly2\n");
-        i_mesh = removeBET_1_max_area(poly1, length_poly1, num_BE_poly1, triangles, adj, r, tnumber, mesh, i_mesh, trivertex);
-        i_mesh = removeBET_1_max_area(poly2, length_poly2, num_BE_poly2, triangles, adj, r, tnumber, mesh, i_mesh, trivertex);
+        i_mesh = Remove_BE(option, poly1, length_poly1, num_BE_poly1, triangles, adj, r, tnumber, mesh, i_mesh, trivertex);
+        i_mesh = Remove_BE(option, poly2, length_poly2, num_BE_poly2, triangles, adj, r, tnumber, mesh, i_mesh, trivertex);
     }else{
         debug_msg("Guardando poly1 y poly2\n");
         i_mesh = save_to_mesh(mesh, poly1, i_mesh, length_poly1);	
@@ -82,9 +90,12 @@ int removeBET_1_max_area(int *poly, int length_poly, int num_BE, int *triangles,
 }
 
 
+
+/* Method 1 to split polygon, max area criteria */
+
 /* Dado un poly con barrier edges
 Optimiza la división de este y devuelve poly1 y poly2*/
-int optimice_partition_polygon(int *t_original, int v_be, int *poly, int length_poly, int *poly1, int *length_poly1, int *poly2, int *length_poly2, int num_BE, int *triangles, int *adj, double *r, int tnumber){
+int optimice1_max_area_criteria(int *t_original, int v_be, int *poly, int length_poly, int *poly1, int *length_poly1, int *poly2, int *length_poly2, int num_BE, int *triangles, int *adj, double *r, int tnumber){
     double A_poly, A1, A2, opt, r_prev, r_act;
     int v_other, aux, origen, t;
     t = *t_original;
@@ -115,7 +126,7 @@ int optimice_partition_polygon(int *t_original, int v_be, int *poly, int length_
 	debug_msg("poly2: "); debug_block( print_poly(poly2, *length_poly2););
 
 
-    A1 =get_signed_area_poly(poly1, *length_poly1,r);
+    A1 = get_signed_area_poly(poly1, *length_poly1,r);
     A2 = get_signed_area_poly(poly2, *length_poly2,r);
 
     /* se calcula el r */
@@ -149,8 +160,7 @@ int optimice_partition_polygon(int *t_original, int v_be, int *poly, int length_
         if (r_act <= r_prev && v_other != -2){
             r_prev = r_act;
             debug_msg("Solución optima no encontrada, repitiendo\n");
-        }
-        else{
+        }else{
             debug_print("Se encontro la optimización con r_act %.2lf\n", r_act);
             v_other = search_prev_vertex_to_split(t, v_be, origen, triangles, adj);
             *t_original = t;
@@ -175,8 +185,41 @@ int optimice_partition_polygon(int *t_original, int v_be, int *poly, int length_
     return EXIT_FAILURE;
 }
 
-
-int removeBET_2_choose_medium(int *poly, int length_poly, int num_BE, int *triangles, int *adj, double *r, int tnumber, int *mesh, int i_mesh){
-
-
+int optimice2_middle_edge(int *t_original, int v_be, int *triangles, int *adj){
+    
+    int aux, origen,i;
+    int t_incident[128];
+    int t = *t_original;
+    
+    origen = -1;
+    i = 0;
+    t_incident[0] = t; i++;
+    
+    while (1)
+    {
+        //advance once triangle
+        aux = t;
+        t = get_adjacent_triangle_share_endpoint(t, origen, v_be, triangles, adj);
+        origen = aux;
+        
+        //if threre is not more triangle to see
+        if( t < 0) break;
+        //save triangle
+        t_incident[i] = t;
+        i++;
+    }
+    //print_poly(t_incident, i);
+    if(i%2 == 0){ //if the triangles surrounding the BET are even 
+        i = i/2;
+        *t_original = t_incident[i];
+        //Choose the edge in common with the two middle triangles
+        return search_prev_vertex_to_split(t_incident[i+1], v_be, t_incident[i], triangles, adj);
+    }else
+    {   
+        //if the triangles surrounding the BET are even 
+        i = (i+1)/2;
+        *t_original = t_incident[i];
+        //Choose any edge of the triangle in the middle; prov is choose due to this always exists
+        return search_next_vertex_to_split(t_incident[i], v_be, t_incident[i-1], triangles, adj);
+    }   
 }

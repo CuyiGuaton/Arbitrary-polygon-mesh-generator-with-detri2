@@ -423,61 +423,7 @@ static int edge_belongs_to(int k, int l, int i, int *p)
 					|| same_edge(k, l, p[3*i + 2], p[3*i + 0]);
 }
 
-
-
-/* get_adjacent_triangle
- * 
- * Retorna el identificador del triángulo que es adyacente al
- * triángulo i, mediante la arista {k,l}.
- * 
- * Si no hay triángulo, retorna NO_ADY (aún si es porque {k,l}
- * es de borde de triangulación).
- * */
-
-int get_adjacent_triangle(int i, int k, int l, int *p, int *adj)
-{
-	int u;
-	int v;
-	int w;
-	
-	/* Comprobar que {k,l} pertenezca al triángulo i. */
-	if(!edge_belongs_to(k, l, i, p))
-	{
-		fprintf(stderr, "** ERROR ** get_adjacent_triangle: Arista {%d,%d} no pertenece al triángulo %d.\n", k, l, i);
-		exit(EXIT_FAILURE);
-	}
-	
-	u = adj[3*i + 0];
-	v = adj[3*i + 1];
-	w = adj[3*i + 2];
-	
-	int index;
-	
-	if((u != NO_ADJ)  && (same_edge(k, l, p[3*u + 0], p[3*u + 1]) ||
-			same_edge(k, l, p[3*u + 1], p[3*u + 2]) || same_edge(k, l, p[3*u + 2], p[3*u + 0])))
-	{
-		index = u;
-	}
-	else if((v != NO_ADJ)  && (same_edge(k, l, p[3*v + 0], p[3*v + 1]) ||
-					same_edge(k, l, p[3*v + 1], p[3*v + 2]) || same_edge(k, l, p[3*v + 2], p[3*v + 0])))
-	{
-		index = v;
-	}
-	else if((w != NO_ADJ) && (same_edge(k, l, p[3*w + 0], p[3*w + 1]) ||
-					same_edge(k, l, p[3*w + 1], p[3*w + 2]) || same_edge(k, l, p[3*w + 2], p[3*w + 0])))
-	{
-		index = w;
-	}
-	else
-	{
-		/* Ningún triángulo apareció como adyacente a {k,l} desde el i. */
-		index = NO_ADJ;
-	}
-	
-	return index;
-}
-
-int  get_edge(int i, int u, int v, int *p){
+int get_edge(int i, int u, int v, int *p){
 	int j, ind1,ind2;
 	for(j = 0; j < 3; j++){
 		ind1 = 3*i + j;
@@ -491,6 +437,23 @@ int  get_edge(int i, int u, int v, int *p){
 	return EXIT_FAILURE;
 
 }
+
+
+/* get_adjacent_triangle
+ * 
+ * Retorna el identificador del triángulo que es adyacente al
+ * triángulo i, mediante la arista {k,l}.
+ * 
+ * Si no hay triángulo, retorna NO_ADY (aún si es porque {k,l}
+ * es de borde de triangulación).
+ * */
+
+int get_adjacent_triangle(int i, int k, int l, int *p, int *adj){
+	return adj[3*i + get_edge(i, k, l, p)];
+}
+
+
+
 
 /*Indica si un triangulo contiene al punto endpoint*/
 int is_continuous(int i, int endpoint, int *p ){
@@ -525,7 +488,7 @@ int get_adjacent_triangle_share_endpoint(int i, int origen, int endpoint, int *p
 	//int i0 = get_adjacent_triangle(i, p0, p1, p, adj);
 	//int i1 = get_adjacent_triangle(i, p1, p2, p, adj);
 	//int i2 = get_adjacent_triangle(i, p2, p0, p, adj);
-
+	
 	int i0 = adj[3*i + 2];
 	int i1 = adj[3*i + 0];
 	int i2 = adj[3*i + 1];
