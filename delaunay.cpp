@@ -12,7 +12,8 @@ void generate_delaunay_from_random_points(int argc, char* argv[], int &pnumber, 
     trimesh->parse_commands(argc, argv);
     trimesh->read_nodes();
     trimesh->incremental_delaunay();
-    
+
+    //dd
     tnumber = trimesh->tr_tris->objects - trimesh->ct_hullsize;
     pnumber = trimesh->ct_in_vrts + (trimesh->tr_steiners != NULL ? trimesh->tr_steiners->objects : 0);              
     if (!trimesh->io_keep_unused) { // no -IJ

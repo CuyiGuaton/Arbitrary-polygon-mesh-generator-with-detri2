@@ -33,4 +33,5 @@ CMakeFiles/DelaunayPolyGenerator.dir/polygon.cpp.o: ../triang.h
 
 CMakeFiles/DelaunayPolyGenerator.dir/triang.cpp.o: ../consts.h
 CMakeFiles/DelaunayPolyGenerator.dir/triang.cpp.o: ../triang.cpp
+CMakeFiles/DelaunayPolyGenerator.dir/triang.cpp.o: ../triang.h
 

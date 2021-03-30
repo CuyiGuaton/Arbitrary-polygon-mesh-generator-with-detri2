@@ -6,33 +6,15 @@
 
 #IncludeRegexTransform: 
 
-/home/cuyi/Dropbox/Doctorado/paper_examen/algo_with_detri2/BET_elimitation.h
-
-/home/cuyi/Dropbox/Doctorado/paper_examen/algo_with_detri2/consts.h
-
-/home/cuyi/Dropbox/Doctorado/paper_examen/algo_with_detri2/delaunay.h
-
-/home/cuyi/Dropbox/Doctorado/paper_examen/algo_with_detri2/io.h
-
-/home/cuyi/Dropbox/Doctorado/paper_examen/algo_with_detri2/main.cpp
+/home/cuyi/Dropbox/Doctorado/paper_examen/algo_with_detri2/BET_elimitation.cpp
 iostream
--
-stdio.h
 -
 stdlib.h
 -
-vector
+stdio.h
 -
-chrono
+math.h
 -
-iomanip
--
-cstdlib
--
-delaunay.h
-/home/cuyi/Dropbox/Doctorado/paper_examen/algo_with_detri2/delaunay.h
-io.h
-/home/cuyi/Dropbox/Doctorado/paper_examen/algo_with_detri2/io.h
 consts.h
 /home/cuyi/Dropbox/Doctorado/paper_examen/algo_with_detri2/consts.h
 triang.h
@@ -43,6 +25,10 @@ mesh.h
 /home/cuyi/Dropbox/Doctorado/paper_examen/algo_with_detri2/mesh.h
 BET_elimitation.h
 /home/cuyi/Dropbox/Doctorado/paper_examen/algo_with_detri2/BET_elimitation.h
+
+/home/cuyi/Dropbox/Doctorado/paper_examen/algo_with_detri2/BET_elimitation.h
+
+/home/cuyi/Dropbox/Doctorado/paper_examen/algo_with_detri2/consts.h
 
 /home/cuyi/Dropbox/Doctorado/paper_examen/algo_with_detri2/mesh.h
 

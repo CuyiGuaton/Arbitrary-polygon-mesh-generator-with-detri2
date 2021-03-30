@@ -3,7 +3,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <math.h>
-
+#include "triang.h"
 #include "consts.h"
 
 #ifdef DEBUG
@@ -475,6 +475,17 @@ int is_continuous(int i, int endpoint, int *p ){
 }
 
 
+
+int advance_i_adjacents_triangles_share_endpoint(int adv, int t, int origen, int endpoint, int *p, int *adj){
+	int aux;
+	while(adv > 0){
+		aux = t;
+        t = get_adjacent_triangle_share_endpoint(t, origen, endpoint, p, adj);
+        origen = aux;
+		adv--;
+	}
+	return t;
+}
 /* 
 	Busca un triangulo adjacente que comparte el mismo endpoint.
 	Origen es el triangulo de donde se viene, -1 si se quiere que se pueda devolver a triangulo anterior.
@@ -569,7 +580,7 @@ int search_triangle_by_vertex_with_FrontierEdge_from_trivertex(int v, int *trian
 	return -1;
 }
 
-
+//Given a triangle i, return the triangle adjacent to the triangle origen that containts the vertex v
 int search_prev_vertex_to_split(int i, int v, int origen, int *triangles, int *adj){
 	int t0, t1,t2;
 	int a0, a1, a2;
@@ -603,7 +614,7 @@ int search_prev_vertex_to_split(int i, int v, int origen, int *triangles, int *a
 }
 
 
-
+//Given a triangle i, return the triangle no adjacent to the triangle origen that containts the vertex v
 int search_next_vertex_to_split(int i, int v, int origen, int *triangles, int *adj){
 	int t0, t1,t2;
 	int a0, a1, a2;
@@ -641,6 +652,8 @@ int search_next_vertex_to_split(int i, int v, int origen, int *triangles, int *a
     exit(0);
 	return -1;
 }
+
+
 
 /*
 error en 147

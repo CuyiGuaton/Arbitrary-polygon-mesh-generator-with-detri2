@@ -46,6 +46,7 @@ int Remove_BE(int option, int *poly, int length_poly, int num_BE, int *triangles
         //t1 = search_triangle_by_vertex_with_FrontierEdge(v_be, triangles, adj, tnumber);
         t1 = search_triangle_by_vertex_with_FrontierEdge_from_trivertex(v_be, triangles, adj, tnumber, trivertex);
         v_other = optimice2_middle_edge(&t1, v_be, triangles, adj);
+        //v_other = optimice2_middle_edge_no_memory(&t1, v_be, triangles, adj);
         //printf("v %d, t %d  | Triangles %d %d %d | ADJ  %d %d %d\n", v_be, t1, triangles[3*t1 + 0], triangles[3*t1 + 1], triangles[3*t1 + 2], adj[3*t1 + 0], adj[3*t1 + 1], adj[3*t1 + 2]);
         t2 = get_adjacent_triangle(t1, v_other, v_be, triangles, adj);
     }
@@ -188,7 +189,7 @@ int optimice1_max_area_criteria(int *t_original, int v_be, int *poly, int length
 int optimice2_middle_edge(int *t_original, int v_be, int *triangles, int *adj){
     
     int aux, origen,i;
-    int t_incident[128];
+    int t_incident[10];
     int t = *t_original;
     
     origen = -1;
@@ -221,5 +222,45 @@ int optimice2_middle_edge(int *t_original, int v_be, int *triangles, int *adj){
         *t_original = t_incident[i];
         //Choose any edge of the triangle in the middle; prov is choose due to this always exists
         return search_next_vertex_to_split(t_incident[i], v_be, t_incident[i-1], triangles, adj);
+    }   
+}
+
+int optimice2_middle_edge_no_memory(int *t_original, int v_be, int *triangles, int *adj){
+    
+    int aux, origen,adv;
+    int t_incident;
+    int t = *t_original;
+    
+    origen = -1;
+    adv = 0; //number of triangles to advance around v_be
+    t_incident = t; 
+    int t_next, t_prev;
+    while (1)
+    {
+        //advance once triangle
+        aux = t;
+        t = get_adjacent_triangle_share_endpoint(t, origen, v_be, triangles, adj);
+        origen = aux;
+        
+        //if threre is not more triangle to see
+        if( t < 0) break;
+        adv++;
+    }
+    //print_poly(t_incident, i);
+    if(adv%2 == 0){ //if the triangles surrounding the BET are even 
+        adv = adv/2;
+        t_prev = advance_i_adjacents_triangles_share_endpoint(adv,t_incident, -1, v_be, triangles, adj);
+        *t_original = t_prev;
+        //Choose the edge in common with the two middle triangles   
+        t_next = get_adjacent_triangle_share_endpoint(t, t_prev, v_be, triangles, adj);
+        return search_prev_vertex_to_split(t_next, v_be, t_prev, triangles, adj);
+    }else
+    {   
+        //if the triangles surrounding the BET are even 
+        //Choose any edge of the triangle in the middle; prov is choose due to this always exists
+        adv = (adv+1)/2 - 1;
+        t_prev = advance_i_adjacents_triangles_share_endpoint(adv,t_incident, -1, v_be, triangles, adj);
+        *t_original = t_prev;
+        return search_next_vertex_to_split(t_next, v_be, t_prev, triangles, adj);
     }   
 }

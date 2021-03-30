@@ -182,9 +182,10 @@ int main(int argc, char* argv[]){
 			num_BE = count_BarrierEdges(poly, length_poly);
 			
 		
-			i_mesh = save_to_mesh(mesh, poly, i_mesh, length_poly);	
+			///i_mesh = save_to_mesh(mesh, poly, i_mesh, length_poly);	
 					
 			if(num_BE>0){
+				
 				//printf("%d %d\n", num_BE, length_poly);
 				est_total_be += num_BE;
 				est_min_triangles_be = (num_BE < est_min_triangles_be) ? num_BE : est_min_triangles_be;
@@ -194,7 +195,7 @@ int main(int argc, char* argv[]){
 
 			}
 			
-		/*
+		
 			debug_msg("Poly: "); debug_block(print_poly(poly, length_poly););
 			if( num_BE > 0){
 				//printf("Se dectecto %d BE\n", num_BE);
@@ -205,10 +206,10 @@ int main(int argc, char* argv[]){
 				
 			}else{
 				debug_msg("Guardando poly\n");
-				i_mesh = save_to_mesh(mesh, poly, i_mesh, length_poly);	
+		//		i_mesh = save_to_mesh(mesh, poly, i_mesh, length_poly);	
 				
 			}
-		*/
+		
 		}
 	}
 
