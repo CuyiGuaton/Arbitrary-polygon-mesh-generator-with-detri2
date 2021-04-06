@@ -423,7 +423,8 @@ static int edge_belongs_to(int k, int l, int i, int *p)
 					|| same_edge(k, l, p[3*i + 2], p[3*i + 0]);
 }
 
-int get_edge(int i, int u, int v, int *p){
+/* Given one triangle i, return the edge index that containts u and v*/
+int get_shared_edge(int i, int u, int v, int *p){
 	int j, ind1,ind2;
 	for(j = 0; j < 3; j++){
 		ind1 = 3*i + j;
@@ -449,7 +450,7 @@ int get_edge(int i, int u, int v, int *p){
  * */
 
 int get_adjacent_triangle(int i, int k, int l, int *p, int *adj){
-	return adj[3*i + get_edge(i, k, l, p)];
+	return adj[3*i + get_shared_edge(i, k, l, p)];
 }
 
 
@@ -475,7 +476,7 @@ int is_continuous(int i, int endpoint, int *p ){
 }
 
 
-
+// advance i triangles arround vertex endpoint
 int advance_i_adjacents_triangles_share_endpoint(int adv, int t, int origen, int endpoint, int *p, int *adj){
 	int aux;
 	while(adv > 0){

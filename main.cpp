@@ -200,13 +200,13 @@ int main(int argc, char* argv[]){
 			if( num_BE > 0){
 				//printf("Se dectecto %d BE\n", num_BE);
 				auto tb_be = std::chrono::high_resolution_clock::now();
-				i_mesh = Remove_BE(1,poly, length_poly, num_BE, triangles, adj, r, tnumber, mesh, i_mesh, trivertex);
+				i_mesh = Remove_BE2(1,poly, length_poly, num_BE, triangles, adj, r, tnumber, mesh, i_mesh, trivertex);
 				auto te_be = std::chrono::high_resolution_clock::now();
 				tcost_be += std::chrono::duration_cast<std::chrono::milliseconds>( te_be - tb_be ).count();
 				
 			}else{
 				debug_msg("Guardando poly\n");
-		//		i_mesh = save_to_mesh(mesh, poly, i_mesh, length_poly);	
+				//i_mesh = save_to_mesh(mesh, poly, i_mesh, length_poly);	
 				
 			}
 		
