@@ -25,52 +25,66 @@
 
 int Remove_BE2(int option, int *poly, int length_poly, int num_BE, int *triangles, int *adj, double *r, int tnumber, int *mesh, int i_mesh, int* trivertex){
     
-    int seed[20];
     int i,j,k,x,y, auxind_poly, ind_poly, ind_poly_after;
     int v_be, v_other;
     int t1, t2, triangle;
     node* hashtable_seed[MAX_HASH];
     node* aux;
     int index;
+    //Hash table is initialize
     generate_hash_table(hashtable_seed);
-    
+        debug_print("Removiendo %d barrier-edges de ", num_BE); debug_block(print_poly(poly, length_poly); );
+    //search by all barrier edge tips and insert edge in the middle    
     for (i = 0; i < length_poly; i++)
     {
         x = i % length_poly;
         y = (i+2) % length_poly;
         if (poly[x] == poly[y]){
             v_be= poly[(i+1) %length_poly];
+            debug_print("Encontrado v_be %d %d %d\n", poly[x], v_be, poly[y]);
             t1 = search_triangle_by_vertex_with_FrontierEdge_from_trivertex(v_be, triangles, adj, tnumber, trivertex);
+            //t1 = search_triangle_by_vertex_with_FrontierEdge(v_be, triangles, adj, tnumber);
             v_other = optimice2_middle_edge(&t1, v_be, triangles, adj);
+            if(v_other == -2){
+                fprintf(stderr, "Caso critico especial, no encuentra vertices para avanzar en la busqueda de eliminación de barries edge, pero es la primera iteración\n");
+                debug_print("v_be - v_other: %d - %d | t1 - t2: %d \n", v_be, v_other, t1);
+            }
             t2 = get_adjacent_triangle(t1, v_other, v_be, triangles, adj);
-
+            debug_print("v_be - v_other: %d - %d | t1 - t2: %d - %d\n", v_be, v_other, t1, t2);
+            //"<<std::endl;
             // Agregar arista
-            adj[3*t1 + get_shared_edge(t1, v_be, v_other, triangles)] = NO_ADJ;
-            adj[3*t2 + get_shared_edge(t2, v_be, v_other, triangles)] = NO_ADJ;
+            if(t2 >= 0){
+                adj[3*t1 + get_shared_edge(t1, v_be, v_other, triangles)] = NO_ADJ;
+                adj[3*t2 + get_shared_edge(t2, v_be, v_other, triangles)] = NO_ADJ;
 
-            //Guardar triangulos adjacentes a hash table de largo k;
-            index = hashy(t1);
-            hashtable_seed[index] = prepend(hashtable_seed[index],t1);
-            index = hashy(t2);
-            hashtable_seed[index] = prepend(hashtable_seed[index],t2);
-            k = k + 2; //elemento en la tabla;
+                //Guardar triangulos adjacentes a hash t able de largo k;
+                index = hashy(t1);
+                hashtable_seed[index] = prepend(hashtable_seed[index],t1);
+                index = hashy(t2);
+                hashtable_seed[index] = prepend(hashtable_seed[index],t2);
+                k = k + 2; //elemento en la tabla;
+            }else{
+                index = hashy(t1);
+                hashtable_seed[index] = prepend(hashtable_seed[index],t1);
+            }
         }
     }
-    
+    //Use triangles of hash table to generate polygons
     for (i = 0, ind_poly = 0; i < MAX_HASH; i++)
     {
-        while(hashtable_seed[i]!=NULL){
-            triangle = hashtable_seed[i]->triangle;
+        while(hashtable_seed[i]!=NULL){ //Select the i nth linked list
+            triangle = hashtable_seed[i]->triangle; //get the head node of the list
             aux =  hashtable_seed[i]; 
-            hashtable_seed[i] = hashtable_seed[i]->next;
-            free(aux); 
-            ind_poly_after = generate_polygon_from_BE(triangle, poly,triangles,adj,r,ind_poly+1, hashtable_seed);
-            poly[ind_poly] = ind_poly_after - ind_poly - 1; // length poly
+            hashtable_seed[i] = hashtable_seed[i]->next; //change the head for the next element
+            free(aux); //delete the original head
+            //generate polygon with index ind_poly +1 
+            ind_poly_after = generate_polygon_from_BE(triangle, poly,triangles,adj,r,ind_poly+1, hashtable_seed); 
+            poly[ind_poly] = ind_poly_after - ind_poly - 1; // calculate lenght poly and save it before their vertex
             ind_poly = ind_poly_after;
         } 
         
-    }
-    
+    } 
+    //save new polygons in mesh
     for(int i = 0; i <ind_poly; i++){
         mesh[i_mesh + i] = poly[i];
     }
@@ -330,10 +344,10 @@ int Remove_BE(int option, int *poly, int length_poly, int num_BE, int *triangles
         v_other = optimice1_max_area_criteria(&t1, v_be, poly, length_poly, poly1, &length_poly1, poly2, &length_poly2, num_BE, triangles, adj, r, tnumber);
         t2 = get_adjacent_triangle(t1, v_other, v_be, triangles, adj);
     }else if(option == 1){
-        //t1 = search_triangle_by_vertex_with_FrontierEdge(v_be, triangles, adj, tnumber);
-        t1 = search_triangle_by_vertex_with_FrontierEdge_from_trivertex(v_be, triangles, adj, tnumber, trivertex);
-        v_other = optimice2_middle_edge(&t1, v_be, triangles, adj);
-        //v_other = optimice2_middle_edge_no_memory(&t1, v_be, triangles, adj);
+        t1 = search_triangle_by_vertex_with_FrontierEdge(v_be, triangles, adj, tnumber);
+        //t1 = search_triangle_by_vertex_with_FrontierEdge_from_trivertex(v_be, triangles, adj, tnumber, trivertex);
+        //v_other = optimice2_middle_edge(&t1, v_be, triangles, adj);
+        v_other = optimice2_middle_edge_no_memory(&t1, v_be, triangles, adj);
         //printf("v %d, t %d  | Triangles %d %d %d | ADJ  %d %d %d\n", v_be, t1, triangles[3*t1 + 0], triangles[3*t1 + 1], triangles[3*t1 + 2], adj[3*t1 + 0], adj[3*t1 + 1], adj[3*t1 + 2]);
         t2 = get_adjacent_triangle(t1, v_other, v_be, triangles, adj);
     }
@@ -476,38 +490,44 @@ int optimice1_max_area_criteria(int *t_original, int v_be, int *poly, int length
 int optimice2_middle_edge(int *t_original, int v_be, int *triangles, int *adj){
     
     int aux, origen,i;
-    int t_incident[10];
+    int t_incident[10000];
     int t = *t_original;
-    
+    i =0;
     origen = -1;
-    i = 0;
-    t_incident[0] = t; i++;
-    
-    while (1)
-    {
-        //advance once triangle
+
+    while(1){
+        debug_print("%d %d %d\n", *t_original, t, origen );
+
+        t_incident[i] = t;
+        i++;
         aux = t;
         t = get_adjacent_triangle_share_endpoint(t, origen, v_be, triangles, adj);
         origen = aux;
-        
-        //if threre is not more triangle to see
-        if( t < 0) break;
-        //save triangle
-        t_incident[i] = t;
-        i++;
+        if (t<0)
+            break;
     }
-    //print_poly(t_incident, i);
+    debug_print("%d %d %d\n", *t_original, t, origen );
+    debug_msg("t_incident"); debug_block(print_poly(t_incident, i); );
+    if(i == 1){
+        *t_original = t_incident[0];
+        //return search_prev_vertex_to_split(t_incident[0], v_be, -1, triangles, adj);
+        for(int j = 0; j < 3; j++){
+            if(triangles[3*t_incident[0] + j] == v_be)
+                return triangles[3*t_incident[0] + (j+1)%3];
+        }
+    }
     if(i%2 == 0){ //if the triangles surrounding the BET are even 
-        i = i/2;
+        i = floor(i/2-1);
         *t_original = t_incident[i];
         //Choose the edge in common with the two middle triangles
+        debug_print("search_prev i %d t_incident[i+1] %d v_be %d t_incident[i] %d \n", i, t_incident[i+1], v_be, t_incident[i]);
         return search_prev_vertex_to_split(t_incident[i+1], v_be, t_incident[i], triangles, adj);
-    }else
-    {   
-        //if the triangles surrounding the BET are even 
-        i = (i+1)/2;
+    }else{   
+        //if the triangles surrounding the BET are odd, edges are even 
+        i = floor(i/2);
         *t_original = t_incident[i];
         //Choose any edge of the triangle in the middle; prov is choose due to this always exists
+        debug_print("search_next i %d t_incident[i] %d v_be %d t_incident[i-1] %d \n", i, t_incident[i], v_be, t_incident[i-1]);
         return search_next_vertex_to_split(t_incident[i], v_be, t_incident[i-1], triangles, adj);
     }   
 }
@@ -515,39 +535,56 @@ int optimice2_middle_edge(int *t_original, int v_be, int *triangles, int *adj){
 int optimice2_middle_edge_no_memory(int *t_original, int v_be, int *triangles, int *adj){
     
     int aux, origen,adv;
+
     int t_incident;
     int t = *t_original;
-    
-    origen = -1;
-    adv = 0; //number of triangles to advance around v_be
-    t_incident = t; 
+    t_incident = t;
+    adv = 0;
+    origen = -1; 
     int t_next, t_prev;
     while (1)
     {
-        //advance once triangle
+        debug_print("%d %d %d\n", *t_original, t, origen) ;
+        adv++;
         aux = t;
         t = get_adjacent_triangle_share_endpoint(t, origen, v_be, triangles, adj);
         origen = aux;
-        
-        //if threre is not more triangle to see
-        if( t < 0) break;
-        adv++;
+        if (t<0)
+            break;
     }
+    debug_print("%d %d %d\n", *t_original, t, origen );
     //print_poly(t_incident, i);
     if(adv%2 == 0){ //if the triangles surrounding the BET are even 
-        adv = adv/2;
+        adv = floor(adv/2 - 1);
         t_prev = advance_i_adjacents_triangles_share_endpoint(adv,t_incident, -1, v_be, triangles, adj);
         *t_original = t_prev;
         //Choose the edge in common with the two middle triangles   
         t_next = get_adjacent_triangle_share_endpoint(t, t_prev, v_be, triangles, adj);
+        debug_print("search_prev adv %d t_next %d v_be %d t_prev %d \n", adv, t_next, v_be, t_prev);    
         return search_prev_vertex_to_split(t_next, v_be, t_prev, triangles, adj);
-    }else
-    {   
-        //if the triangles surrounding the BET are even 
+    }else{   
+        //if the triangles surrounding the BET are odd, edges are even
         //Choose any edge of the triangle in the middle; prov is choose due to this always exists
-        adv = (adv+1)/2 - 1;
-        t_prev = advance_i_adjacents_triangles_share_endpoint(adv,t_incident, -1, v_be, triangles, adj);
+        adv = floor(adv/2);
+        t_next = advance_i_adjacents_triangles_share_endpoint(adv,t_incident, -1, v_be, triangles, adj);
         *t_original = t_prev;
+        t_prev = get_adjacent_triangle_share_endpoint(t, t_prev, v_be, triangles, adj);
+        debug_print("search_next adv %d t_next %d v_be %d t_prev %d \n", adv, t_next, v_be, t_prev);
         return search_next_vertex_to_split(t_next, v_be, t_prev, triangles, adj);
     }   
 }
+
+/*
+/home/cuyi/Dropbox/Doctorado/paper_examen/algo_with_detri2/BET_elimitation.cpp:35:Remove_BE2(): Removiendo barrier edge de (17) 2 66 39 61 90 54 82 87 74 45 21 45 74 87 24 97 19
+/home/cuyi/Dropbox/Doctorado/paper_examen/algo_with_detri2/BET_elimitation.cpp:491:optimice2_middle_edge(): 129 129 -1
+/home/cuyi/Dropbox/Doctorado/paper_examen/algo_with_detri2/BET_elimitation.cpp:491:optimice2_middle_edge(): 129 142 129
+/home/cuyi/Dropbox/Doctorado/paper_examen/algo_with_detri2/BET_elimitation.cpp:491:optimice2_middle_edge(): 129 132 142
+/home/cuyi/Dropbox/Doctorado/paper_examen/algo_with_detri2/BET_elimitation.cpp:491:optimice2_middle_edge(): 129 123 132
+/home/cuyi/Dropbox/Doctorado/paper_examen/algo_with_detri2/BET_elimitation.cpp:491:optimice2_middle_edge(): 129 149 123
+/home/cuyi/Dropbox/Doctorado/paper_examen/algo_with_detri2/BET_elimitation.cpp:491:optimice2_middle_edge(): 129 153 149
+/home/cuyi/Dropbox/Doctorado/paper_examen/algo_with_detri2/BET_elimitation.cpp:491:optimice2_middle_edge(): 129 147 153
+/home/cuyi/Dropbox/Doctorado/paper_examen/algo_with_detri2/BET_elimitation.cpp:501:optimice2_middle_edge(): 129 -2 147
+/home/cuyi/Dropbox/Doctorado/paper_examen/algo_with_detri2/BET_elimitation.cpp:502:optimice2_middle_edge(): t_incident(7) 129 142 132 123 149 153 147
+/home/cuyi/Dropbox/Doctorado/paper_examen/algo_with_detri2/BET_elimitation.cpp:515:optimice2_middle_edge(): search_next i 3 t_incident[i] 123 v_be 21 t_incident[i-1] 132 
+/home/cuyi/Dropbox/Doctorado/paper_examen/algo_with_detri2/BET_elimitation.cpp:50:Remove_BE2(): v_be - v_other: 21 - 66 | t1 - t2: 123 - 149
+*/

@@ -1,5 +1,8 @@
 void generate_delaunay_from_random_points(int argc, char* argv[], int &pnumber, int &tnumber);
 void copy_delaunay_arrays(int tnumber, double *r, int* triangles, int* adj);
+
+
+
 /*
 Por hacer 
 

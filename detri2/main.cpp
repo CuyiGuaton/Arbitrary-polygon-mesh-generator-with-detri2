@@ -1819,17 +1819,5 @@ int anisotropic_CVT(int argc, char* argv[])
 
 //==============================================================================
 
-int main(int argc, char* argv[])
-{
-  //return recover_weighted_Delaunay(argc, argv);
 
-  //anisotropic_CVT(argc, argv);
-  return generate_mesh(argc, argv);
-  //save_inp_to_smesh(argc, argv);
-  //merge_two_triangulations(argc, argv);
-  
-  //int status = adapt_mesh(argc, argv);
-  //int status = interpolate_solutions(argc, argv);
-  //int status = save_solution_to_paraview(argc, argv);
-  //return status;
-}
+

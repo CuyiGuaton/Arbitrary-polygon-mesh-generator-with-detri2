@@ -9,7 +9,7 @@
 #ifdef DEBUG
 #define DEBUG_TEST 1
 #else
-#define DEBUG_TEST 0
+#define DEBUG_TEST 1
 #endif
 
 #define debug_block(fmt) do { if (DEBUG_TEST){ fmt }} while (0)
@@ -480,11 +480,27 @@ int is_continuous(int i, int endpoint, int *p ){
 int advance_i_adjacents_triangles_share_endpoint(int adv, int t, int origen, int endpoint, int *p, int *adj){
 	int aux;
 	while(adv > 0){
+		printf("%d %d\n", t, origen) ;
 		aux = t;
         t = get_adjacent_triangle_share_endpoint(t, origen, endpoint, p, adj);
         origen = aux;
 		adv--;
 	}
+	printf("%d %d\n", t, origen) ;
+	return t;
+}
+
+// advance i triangles arround vertex endpoint
+int get_next_and_prev_triangles(int adv, int t, int origen, int endpoint, int *p, int *adj){
+	int aux;
+	while(adv > 0){
+		printf("%d %d\n", t, origen) ;
+		aux = t;
+        t = get_adjacent_triangle_share_endpoint(t, origen, endpoint, p, adj);
+        origen = aux;
+		adv--;
+	}
+	printf("%d %d\n", t, origen) ;
 	return t;
 }
 /* 
@@ -510,13 +526,13 @@ int get_adjacent_triangle_share_endpoint(int i, int origen, int endpoint, int *p
 	int ic1 = is_continuous(i1 ,endpoint, p);
 	int ic2 = is_continuous(i2 ,endpoint, p);
 	
-	//debug_print("FUNCTION i0 ic0 %d %d   || i1 ic1 %d %d || i2 ic2 %d %d  \n", i0, ic0, i1,ic1,  i2,ic2);
-	//debug_print("T %d endpoint %d | Triangles %d %d %d | ADJ  %d %d %d\n", i, endpoint, p[3*i + 0], p[3*i + 1], p[3*i + 2], adj[3*i + 0], adj[3*i + 1], adj[3*i + 2] );
+	debug_print("FUNCTION i0 ic0 %d %d   || i1 ic1 %d %d || i2 ic2 %d %d  \n", i0, ic0, i1,ic1,  i2,ic2);
+	debug_print("T %d endpoint %d | Triangles %d %d %d | ADJ  %d %d %d\n", i, endpoint, p[3*i + 0], p[3*i + 1], p[3*i + 2], adj[3*i + 0], adj[3*i + 1], adj[3*i + 2] );
 	if(ic0 != -1 &&  i0 != origen && i0 != -1){ /*Si hay contuinidad y no retrocede al origen */
 		return i0;
 	}else if(ic1 != -1 && i1 != origen  && i1 != -1){
 		return i1;
-	}else if(ic2 != -1 &&   i2 != origen  && i2 != -1){
+	}else if(ic2 != -1 && i2 != origen  && i2 != -1){
 		return i2;
 	}
 	return -2;
