@@ -2,9 +2,11 @@
 #include <stdio.h>   
 #include <stdlib.h>     /* exit, EXIT_FAILURE */
 #include <vector> 
+#include <set>
 #include <chrono>
 #include <iomanip>
 #include <cstdlib>
+#include <list>
 
 
 #include "delaunay.h"
@@ -170,7 +172,7 @@ int main(int argc, char* argv[]){
 	
 	
     int length_poly;
-
+	std::list <int> seed_bet;  
 	
 	debug_msg("Etapa 5: Generar poligonos\n");
 	int poly[1000];	
@@ -181,9 +183,7 @@ int main(int argc, char* argv[]){
 
 			length_poly = generate_polygon(i, poly, triangles, adj, r);
 			num_BE = count_BarrierEdges(poly, length_poly);
-			
-		
-			i_mesh = save_to_mesh(mesh, poly, i_mesh, length_poly);	
+	
 					
 			if(num_BE>0){
 				//i_mesh = save_to_mesh(mesh, poly, i_mesh, length_poly);
@@ -198,18 +198,18 @@ int main(int argc, char* argv[]){
 		
 			debug_msg("Poly: "); debug_block(print_poly(poly, length_poly););
 			if( num_BE > 0){
+				seed[i] = FALSE;
 				//printf("Se dectecto %d BE\n", num_BE);
 				auto tb_be = std::chrono::high_resolution_clock::now();
-				i_mesh = Remove_BE2(1,poly, length_poly, num_BE, triangles, adj, r, tnumber, mesh, i_mesh, trivertex);
+				i_mesh = Remove_BE2(1,poly, length_poly, num_BE, triangles, adj, r, tnumber, mesh, i_mesh, trivertex, seed_bet);
 				auto te_be = std::chrono::high_resolution_clock::now();
 				tcost_be += std::chrono::duration_cast<std::chrono::milliseconds>( te_be - tb_be ).count();
 				
 			}else{
 				debug_msg("Guardando poly\n");
-				//i_mesh = save_to_mesh(mesh, poly, i_mesh, length_poly);	
+				i_mesh = save_to_mesh(mesh, poly, i_mesh, length_poly);	
 				
 			}
-		
 		}
 	}
 	auto te_travel = std::chrono::high_resolution_clock::now();
@@ -218,6 +218,8 @@ int main(int argc, char* argv[]){
 	int num_region = count_regions(mesh,i_mesh);
 
 	write_geomview(r, triangles, pnumber, tnumber, i_mesh, mesh, seed, num_region, print_triangles);
+	write_VEM(r, triangles, pnumber, tnumber, i_mesh, mesh, seed, num_region, print_triangles);
+	write_VEM_triangles(r, triangles, adj, pnumber, tnumber, i_mesh, mesh, seed, num_region, seed_bet);
 
 /*
 	int edges = pos_poly[0];

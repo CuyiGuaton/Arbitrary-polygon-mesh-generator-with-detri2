@@ -23,11 +23,15 @@ stdlib.h
 -
 vector
 -
+set
+-
 chrono
 -
 iomanip
 -
 cstdlib
+-
+list
 -
 delaunay.h
 /home/cuyi/Dropbox/Doctorado/paper_examen/algo_with_detri2/delaunay.h

@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <math.h>
+#include <list>
 
 #include "consts.h"
 #include "triang.h"
@@ -23,12 +24,14 @@
 #define debug_msg(fmt) do { if (DEBUG_TEST) fprintf(stderr, "%s:%d:%s(): " fmt, __FILE__,  __LINE__, __func__); } while (0)
 
 
-int Remove_BE2(int option, int *poly, int length_poly, int num_BE, int *triangles, int *adj, double *r, int tnumber, int *mesh, int i_mesh, int* trivertex){
+int Remove_BE2(int option, int *poly, int length_poly, int num_BE, int *triangles, int *adj, double *r, int tnumber, int *mesh, int i_mesh, int* trivertex, std::list <int> &seed_bet){
     
     int i,j,k,x,y, auxind_poly, ind_poly, ind_poly_after;
     int v_be, v_other;
     int t1, t2, triangle;
     node* hashtable_seed[MAX_HASH];
+    //MAX_HASH = num_BE +1;
+    //node* hashtable_seed = (node *)malloc(MAX_HASH*sizeof(int));
     node* aux;
     int index;
     //Hash table is initialize
@@ -72,7 +75,7 @@ int Remove_BE2(int option, int *poly, int length_poly, int num_BE, int *triangle
     //Use triangles of hash table to generate polygons
     for (i = 0, ind_poly = 0; i < MAX_HASH; i++)
     {
-        while(hashtable_seed[i]!=NULL){ //Select the i nth linked list
+        while(hashtable_seed[i] != NULL){ //Select the i nth linked list
             triangle = hashtable_seed[i]->triangle; //get the head node of the list
             aux =  hashtable_seed[i]; 
             hashtable_seed[i] = hashtable_seed[i]->next; //change the head for the next element
@@ -81,6 +84,7 @@ int Remove_BE2(int option, int *poly, int length_poly, int num_BE, int *triangle
             ind_poly_after = generate_polygon_from_BE(triangle, poly,triangles,adj,r,ind_poly+1, hashtable_seed); 
             poly[ind_poly] = ind_poly_after - ind_poly - 1; // calculate lenght poly and save it before their vertex
             ind_poly = ind_poly_after;
+            seed_bet.push_front(triangle);
         } 
         
     } 

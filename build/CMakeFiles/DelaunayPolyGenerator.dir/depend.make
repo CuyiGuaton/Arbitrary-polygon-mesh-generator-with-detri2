@@ -17,6 +17,7 @@ CMakeFiles/DelaunayPolyGenerator.dir/hashtable.cpp.o: ../hashtable.h
 
 CMakeFiles/DelaunayPolyGenerator.dir/io.cpp.o: ../consts.h
 CMakeFiles/DelaunayPolyGenerator.dir/io.cpp.o: ../io.cpp
+CMakeFiles/DelaunayPolyGenerator.dir/io.cpp.o: ../io.h
 CMakeFiles/DelaunayPolyGenerator.dir/io.cpp.o: ../triang.h
 
 CMakeFiles/DelaunayPolyGenerator.dir/main.cpp.o: ../BET_elimitation.h
