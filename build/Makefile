@@ -163,6 +163,33 @@ BET_elimitation.cpp.s:
 	$(MAKE) -f CMakeFiles/DelaunayPolyGenerator.dir/build.make CMakeFiles/DelaunayPolyGenerator.dir/BET_elimitation.cpp.s
 .PHONY : BET_elimitation.cpp.s
 
+SmallestEnclosingCircle.o: SmallestEnclosingCircle.cpp.o
+
+.PHONY : SmallestEnclosingCircle.o
+
+# target to build an object file
+SmallestEnclosingCircle.cpp.o:
+	$(MAKE) -f CMakeFiles/DelaunayPolyGenerator.dir/build.make CMakeFiles/DelaunayPolyGenerator.dir/SmallestEnclosingCircle.cpp.o
+.PHONY : SmallestEnclosingCircle.cpp.o
+
+SmallestEnclosingCircle.i: SmallestEnclosingCircle.cpp.i
+
+.PHONY : SmallestEnclosingCircle.i
+
+# target to preprocess a source file
+SmallestEnclosingCircle.cpp.i:
+	$(MAKE) -f CMakeFiles/DelaunayPolyGenerator.dir/build.make CMakeFiles/DelaunayPolyGenerator.dir/SmallestEnclosingCircle.cpp.i
+.PHONY : SmallestEnclosingCircle.cpp.i
+
+SmallestEnclosingCircle.s: SmallestEnclosingCircle.cpp.s
+
+.PHONY : SmallestEnclosingCircle.s
+
+# target to generate assembly for a file
+SmallestEnclosingCircle.cpp.s:
+	$(MAKE) -f CMakeFiles/DelaunayPolyGenerator.dir/build.make CMakeFiles/DelaunayPolyGenerator.dir/SmallestEnclosingCircle.cpp.s
+.PHONY : SmallestEnclosingCircle.cpp.s
+
 delaunay.o: delaunay.cpp.o
 
 .PHONY : delaunay.o
@@ -298,6 +325,33 @@ mesh.cpp.s:
 	$(MAKE) -f CMakeFiles/DelaunayPolyGenerator.dir/build.make CMakeFiles/DelaunayPolyGenerator.dir/mesh.cpp.s
 .PHONY : mesh.cpp.s
 
+metrics.o: metrics.cpp.o
+
+.PHONY : metrics.o
+
+# target to build an object file
+metrics.cpp.o:
+	$(MAKE) -f CMakeFiles/DelaunayPolyGenerator.dir/build.make CMakeFiles/DelaunayPolyGenerator.dir/metrics.cpp.o
+.PHONY : metrics.cpp.o
+
+metrics.i: metrics.cpp.i
+
+.PHONY : metrics.i
+
+# target to preprocess a source file
+metrics.cpp.i:
+	$(MAKE) -f CMakeFiles/DelaunayPolyGenerator.dir/build.make CMakeFiles/DelaunayPolyGenerator.dir/metrics.cpp.i
+.PHONY : metrics.cpp.i
+
+metrics.s: metrics.cpp.s
+
+.PHONY : metrics.s
+
+# target to generate assembly for a file
+metrics.cpp.s:
+	$(MAKE) -f CMakeFiles/DelaunayPolyGenerator.dir/build.make CMakeFiles/DelaunayPolyGenerator.dir/metrics.cpp.s
+.PHONY : metrics.cpp.s
+
 polygon.o: polygon.cpp.o
 
 .PHONY : polygon.o
@@ -365,6 +419,9 @@ help:
 	@echo "... BET_elimitation.o"
 	@echo "... BET_elimitation.i"
 	@echo "... BET_elimitation.s"
+	@echo "... SmallestEnclosingCircle.o"
+	@echo "... SmallestEnclosingCircle.i"
+	@echo "... SmallestEnclosingCircle.s"
 	@echo "... delaunay.o"
 	@echo "... delaunay.i"
 	@echo "... delaunay.s"
@@ -380,6 +437,9 @@ help:
 	@echo "... mesh.o"
 	@echo "... mesh.i"
 	@echo "... mesh.s"
+	@echo "... metrics.o"
+	@echo "... metrics.i"
+	@echo "... metrics.s"
 	@echo "... polygon.o"
 	@echo "... polygon.i"
 	@echo "... polygon.s"

@@ -1,3 +1,4 @@
+void reverse(int arr[], int n);
 int generate_polygon(int i, int * poly, int * triangles, int * adj, double *r);
 double get_signed_area_poly(int *poly, int length_poly, double *r);
 

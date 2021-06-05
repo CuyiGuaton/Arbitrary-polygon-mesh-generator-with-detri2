@@ -6,7 +6,7 @@ from math import sqrt
 def write_points(nPoints, xPoints, yPoints):
     largo =len(xPoints)
     #f = open(str(largo) + '.node', 'w')
-    f = open('autodata.node', 'w')
+    f = open('input/autodata.node', 'w')
     f.write("{} 2 0 0\n".format(largo))
     for i in range(0,largo):
         f.write('{0} {1} {2}\n'.format(i, xPoints[i], yPoints[i]))

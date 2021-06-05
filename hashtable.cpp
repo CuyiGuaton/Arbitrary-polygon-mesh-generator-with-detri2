@@ -8,7 +8,7 @@
 #ifdef DEBUG
 #define DEBUG_TEST 1
 #else
-#define DEBUG_TEST 1
+#define DEBUG_TEST 0
 #endif
 
 #define debug_block(fmt) do { if (DEBUG_TEST){ fmt }} while (0)

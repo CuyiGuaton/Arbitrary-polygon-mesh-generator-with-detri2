@@ -62,7 +62,8 @@ int max_edge_index(int i, double *r, int *p)
 	l0 = dist(r[2*p0 + 0], r[2*p0 + 1], r[2*p1 + 0], r[2*p1 + 1]);
 	l1 = dist(r[2*p1 + 0], r[2*p1 + 1], r[2*p2 + 0], r[2*p2 + 1]);
 	l2 = dist(r[2*p2 + 0], r[2*p2 + 1], r[2*p0 + 0], r[2*p0 + 1]);
-	double epsion = 0.001f;
+	//se aumento la precisión para las mallas de 25k en 2x2
+	double epsion = 0.0001f;
 
 	//if((l0 >= l1 && l1 >= l2) || (l0 >= l2 && l2 >= l1))
 	if( (GreaterEqualthan(l0,l1,epsion) && GreaterEqualthan(l1,l2,epsion)) || ( GreaterEqualthan(l0,l2,epsion) && GreaterEqualthan(l2,l1,epsion)))

@@ -7,7 +7,8 @@
 #include <iomanip>
 #include <cstdlib>
 #include <list>
-
+#include <string>
+#include <math.h>  
 
 #include "delaunay.h"
 #include "io.h"
@@ -20,7 +21,7 @@
 #ifdef DEBUG
 #define DEBUG_TEST 1
 #else
-#define DEBUG_TEST 1
+#define DEBUG_TEST 0
 #endif
 
 #define debug_block(fmt) do { if (DEBUG_TEST){ fmt }} while (0)
@@ -30,6 +31,11 @@
 //make &&  python3 rp.py 100 0 0 && ./DelaunayPolyGenerator autodata.node && geomview output/.off
 //make &&  python3 rp.py 506 0 0 && ./DelaunayPolyGenerator -p -q unicorn.poly && geomview output/.off
 
+//detri funca
+// python3 2x2quatercircle.py 63000 && make &&  ./DelaunayPolyGenerator -p input/RP2x2quartercircle_63000.poly 
+
+//algp da vacios
+// make &&  ./DelaunayPolyGenerator -z input/unisquare2x2_41857.node && geomview output/unisquare2x2_41857.off
 
 int main(int argc, char* argv[]){
 
@@ -43,9 +49,7 @@ int main(int argc, char* argv[]){
     //char* ppath = const_cast<char*> ("test");
 
 	//number elements
-	int tnumber, pnumber, i,j;
-	
-
+	int tnumber, pnumber, i,j, num_border;
 	//arrays inicilization
 	double *r;
 	int *triangles;
@@ -67,8 +71,10 @@ int main(int argc, char* argv[]){
 	mesh = (int *)malloc(3*tnumber*sizeof(int));
 	trivertex = (int *)malloc(pnumber*sizeof(int));
 
+	int *border = (int *)malloc(2*tnumber*sizeof(int));
+
 	copy_delaunay_arrays(tnumber, r, triangles, adj);
-	
+
 	//Asociate each vertex to an adjacent  triangle
 	for(i = 0; i < pnumber; i++){
 		for (j = 0; j < tnumber; j++)
@@ -81,6 +87,8 @@ int main(int argc, char* argv[]){
 		//std::cout<<"trivertex["<<i<<"] "<<trivertex[i]<<std::endl;
 	}
 
+	num_border = get_border_points(pnumber,tnumber, border,triangles, adj, r);
+	
 	//stats
 	int i_mesh = 0;	
 	int num_BE = 0;
@@ -98,8 +106,6 @@ int main(int argc, char* argv[]){
 	}
 	
 	auto t1 = std::chrono::high_resolution_clock::now();
-
-
 	auto tb_label =std::chrono::high_resolution_clock::now();
 	/* Etapa 1: Encontrar aristas máximas. */
 	debug_msg("Etapa 1: Encontrar aristas máximas. \n");
@@ -207,7 +213,7 @@ int main(int argc, char* argv[]){
 				
 			}else{
 				debug_msg("Guardando poly\n");
-				i_mesh = save_to_mesh(mesh, poly, i_mesh, length_poly);	
+				i_mesh = save_to_mesh(mesh, poly, i_mesh, length_poly, r);	
 				
 			}
 		}
@@ -217,58 +223,32 @@ int main(int argc, char* argv[]){
 
 	int num_region = count_regions(mesh,i_mesh);
 
-	write_geomview(r, triangles, pnumber, tnumber, i_mesh, mesh, seed, num_region, print_triangles);
-	write_VEM(r, triangles, pnumber, tnumber, i_mesh, mesh, seed, num_region, print_triangles);
-	write_VEM_triangles(r, triangles, adj, pnumber, tnumber, i_mesh, mesh, seed, num_region, seed_bet);
+	std::string name(argv[argc-1]);
+	name.erase(0,6);
+	name.erase(name.end()-5,name.end());
 
-/*
-	int edges = pos_poly[0];
-	int est_max_edges = edges;
-	int est_min_edges = edges;
-	int est_total_edges= edges;
-	for(i = 1; i< id_pos_poly; i ++){
-		edges = (pos_poly[i] - pos_poly[i-1]);
-		est_max_edges = edges > est_max_edges ? edges : est_max_edges;
-		est_min_edges = edges < est_min_edges ? edges : est_min_edges;
-		est_total_edges += edges;
-	}*/
-
-	int edges, est_max_edges, est_min_edges,est_total_edges;
-	edges = mesh[0];
-	est_max_edges = edges;
-	est_min_edges = edges;
-	est_total_edges= edges;
-	i = 0;
-	while(i < i_mesh){
-        edges = mesh[i];
-		est_max_edges = edges > est_max_edges ? edges : est_max_edges;
-		est_min_edges = edges < est_min_edges ? edges : est_min_edges;
-		est_total_edges += edges;
-        i++;
-        for(j=0; j < edges;j++){            
-			i++;
-        }
-    }
-
-	std::cout << std::setprecision(3) << std::fixed;
-    std::cout <<"pnumber tnumber num_reg poly_with_be total_be min_poly_be max_poly_be ratio_be_per_poly total_edges max_edges min_edges edges_by_poly num_terminal_edges num_terminal_border_edges num_frontier_edges num_frontier_border_edges num_interior_edges tdelaunay tlabel talgorithm ttraveandtopt ttravelalone topt"<<std::endl;
-	std::cout<<pnumber<<" "<<tnumber<<" "<<num_region;
-	std::cout<<" "<<est_poly_with_be<<" "<<est_total_be<<" "<<est_min_triangles_be<<" "<<est_max_triangles_be;
-	std::cout<<" "<<(est_poly_with_be > 0 ? est_ratio_be/est_poly_with_be : 0.0);
-	std::cout<<" "<<est_total_edges<<" "<<est_max_edges<<" "<<est_min_edges<<" "<<(float)est_total_edges/num_region;
-	std::cout<<" "<<num_terminal_edges/2<<" "<<num_terminal_border_edges<<" "<<num_frontier_edges/2<<" "<<num_frontier_border_edges<<" "<<num_interior_edges/2;
-	std::cout<<" "<<std::chrono::duration_cast<std::chrono::milliseconds>(te_delaunay - tb_delaunay).count();
-	std::cout<<" "<<std::chrono::duration_cast<std::chrono::milliseconds>(te_label - tb_label).count();
-	std::cout<<" "<<std::chrono::duration_cast<std::chrono::milliseconds>(t2 - t1 ).count();
-	std::cout<<" "<<std::chrono::duration_cast<std::chrono::milliseconds>(te_travel - tb_travel).count();
-	std::cout<<" "<<std::chrono::duration_cast<std::chrono::milliseconds>(te_travel - tb_travel).count() - tcost_be;
-	std::cout<<" "<<tcost_be<<std::endl;
-	std::cout<<3*pnumber - 3 - (num_terminal_border_edges + num_frontier_border_edges) <<" = "<<num_terminal_edges/2 + num_terminal_border_edges + num_frontier_edges/2 + num_frontier_border_edges + num_interior_edges/2<<" "<<(3*pnumber - 3 - (num_terminal_border_edges + num_frontier_border_edges) == num_terminal_edges/2 + num_terminal_border_edges + num_frontier_edges/2 + num_frontier_border_edges + num_interior_edges/2)<<std::endl;
+	write_geomview(name, r, triangles, pnumber, tnumber, i_mesh, mesh, seed, num_region, print_triangles);
+	//write_alejandro(name, r, triangles, pnumber, tnumber, i_mesh, mesh, num_region);
+	write_alejandro_custom(name, r, triangles, pnumber, tnumber, i_mesh, mesh, num_region, border, num_border);
+	//write_VEM(name, r, triangles, pnumber, tnumber, i_mesh, mesh, seed, num_region, print_triangles);
+	//write_VEM_triangles(name, r, triangles, adj, pnumber, tnumber, i_mesh, mesh, seed, num_region, seed_bet);
+	//write_GID(name, r, triangles, adj, pnumber, tnumber);
+	//write_triangulation(name, r, triangles, adj, pnumber, tnumber);
+	int t_delaunay = std::chrono::duration_cast<std::chrono::milliseconds>(te_delaunay - tb_delaunay).count();
+	int t_label = std::chrono::duration_cast<std::chrono::milliseconds>(te_label - tb_label).count();
+	int t_total = std::chrono::duration_cast<std::chrono::milliseconds>(t2 - t1 ).count();
+	int t_travel_and_opt = std::chrono::duration_cast<std::chrono::milliseconds>(te_travel - tb_travel).count();
+	int t_travel = std::chrono::duration_cast<std::chrono::milliseconds>(te_travel - tb_travel).count() - tcost_be;
+	
+	write_metrics(name,r, triangles, pnumber, tnumber,i_mesh,  mesh,  num_region,  num_border,  num_terminal_edges,  num_terminal_border_edges,  num_frontier_edges,  num_frontier_border_edges,  num_interior_edges,  t_delaunay,  t_label,  t_total,  t_travel_and_opt,  t_travel, tcost_be, num_BE,  est_total_be,  est_min_triangles_be,  est_max_triangles_be,  est_poly_with_be, est_ratio_be);
+	
+	free(trivertex);
 	free(r);
 	free(triangles);
 	free(adj);
 	free(seed);
 	free(mesh);    
+	free(border);
 	return EXIT_SUCCESS;
 }
     

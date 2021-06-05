@@ -3,12 +3,13 @@
 #include <stdio.h>
 #include <math.h>
 #include <list>
+#include <unordered_map>
 
 #include "consts.h"
 #include "triang.h"
 #include "polygon.h"
 #include "mesh.h"
-#include "hashtable.h"
+
 #include "BET_elimitation.h"
 
 
@@ -16,7 +17,7 @@
 #ifdef DEBUG
 #define DEBUG_TEST 1
 #else
-#define DEBUG_TEST 0
+#define DEBUG_TEST 1
 #endif
 
 #define debug_block(fmt) do { if (DEBUG_TEST){ fmt }} while (0)
@@ -29,13 +30,13 @@ int Remove_BE2(int option, int *poly, int length_poly, int num_BE, int *triangle
     int i,j,k,x,y, auxind_poly, ind_poly, ind_poly_after;
     int v_be, v_other;
     int t1, t2, triangle;
-    node* hashtable_seed[MAX_HASH];
+    
     //MAX_HASH = num_BE +1;
     //node* hashtable_seed = (node *)malloc(MAX_HASH*sizeof(int));
-    node* aux;
+
     int index;
     //Hash table is initialize
-    generate_hash_table(hashtable_seed);
+    std::unordered_map<int,int> hashtable;
     debug_print("Removiendo %d barrier-edges de ", num_BE); debug_block(print_poly(poly, length_poly); );
     //search by all barrier edge tips and insert edge in the middle    
     for (i = 0; i < length_poly; i++)
@@ -46,8 +47,10 @@ int Remove_BE2(int option, int *poly, int length_poly, int num_BE, int *triangle
             v_be= poly[(i+1) %length_poly];
             debug_print("Encontrado v_be %d %d %d\n", poly[x], v_be, poly[y]);
             t1 = search_triangle_by_vertex_with_FrontierEdge_from_trivertex(v_be, triangles, adj, tnumber, trivertex);
+            
             //t1 = search_triangle_by_vertex_with_FrontierEdge(v_be, triangles, adj, tnumber);
             v_other = optimice2_middle_edge(&t1, v_be, triangles, adj);
+            
             if(v_other == -2){
                 fprintf(stderr, "Caso critico especial, no encuentra vertices para avanzar en la busqueda de eliminación de barries edge, pero es la primera iteración\n");
                 debug_print("v_be - v_other: %d - %d | t1 - t2: %d \n", v_be, v_other, t1);
@@ -61,34 +64,46 @@ int Remove_BE2(int option, int *poly, int length_poly, int num_BE, int *triangle
                 adj[3*t2 + get_shared_edge(t2, v_be, v_other, triangles)] = NO_ADJ;
 
                 //Guardar triangulos adjacentes a hash t able de largo k;
-                index = hashy(t1);
-                if(!search(hashtable_seed[index], t1))
-                    hashtable_seed[index] = prepend(hashtable_seed[index],t1);
-                index = hashy(t2);
-                if(!search(hashtable_seed[index], t2))
-                    hashtable_seed[index] = prepend(hashtable_seed[index],t2);
+                hashtable[t1] = t1;
+                //index = hashy(t1);
+                //hashtable_seed[index] = prepend(hashtable_seed[index],t1);
+                //index = hashy(t2);
+                //hashtable_seed[index] = prepend(hashtable_seed[index],t2);
+                hashtable[t2]=t2;
+                //k = k + 2; //elemento en la tabla;
             }else{
-                index = hashy(t1);
-                if(!search(hashtable_seed[index], t1))
-                    hashtable_seed[index] = prepend(hashtable_seed[index],t1);
+                //index = hashy(t1);
+                //hashtable_seed[index] = prepend(hashtable_seed[index],t1);
+                hashtable[t1]=t1;
             }
         }
     }
     //Use triangles of hash table to generate polygons
-    for (i = 0, ind_poly = 0; i < MAX_HASH; i++)
-    {
-        while(hashtable_seed[i] != NULL){ //Select the i nth linked list
-            
-            triangle = hashtable_seed[i]->triangle; //get the head node of the list
-            aux =  hashtable_seed[i]; 
-            hashtable_seed[i] = hashtable_seed[i]->next; //change the head for the next element
-            free(aux); //delete the original head
-            //generate polygon with index ind_poly +1 
-            ind_poly_after = generate_polygon_from_BE(triangle, poly,triangles,adj,r,ind_poly+1, hashtable_seed); 
-            poly[ind_poly] = ind_poly_after - ind_poly - 1; // calculate lenght poly and save it before their vertex
-            ind_poly = ind_poly_after;
-            seed_bet.push_front(triangle);
-        } 
+    //for (i = 0, ind_poly = 0; i < MAX_HASH; i++)
+    //{
+    //    while(hashtable_seed[i] != NULL){ //Select the i nth linked list
+    //        triangle = hashtable_seed[i]->triangle; //get the head node of the list
+    //        aux =  hashtable_seed[i]; 
+    //        hashtable_seed[i] = hashtable_seed[i]->next; //change the head for the next element
+    //        free(aux); //delete the original head
+    //        //generate polygon with index ind_poly +1 
+    //        ind_poly_after = generate_polygon_from_BE(triangle, poly,triangles,adj,r,ind_poly+1, hashtable_seed); 
+    //        poly[ind_poly] = ind_poly_after - ind_poly - 1; // calculate lenght poly and save it before their vertex
+    //        ind_poly = ind_poly_after;
+    //        seed_bet.push_front(triangle);
+    //    } 
+    //    
+    //}
+    while(!hashtable.empty() ) {
+        auto x = hashtable.begin();
+        std::cout<<"Mira "<<x->first<<std::endl;
+        triangle = x->first; //get the head node of the list
+        hashtable.erase(x->first);
+        ind_poly_after = generate_polygon_from_BE(triangle, poly,triangles,adj,r,ind_poly+1, hashtable); 
+        poly[ind_poly] = ind_poly_after - ind_poly - 1; // calculate lenght poly and save it before their vertex
+        ind_poly = ind_poly_after;
+        seed_bet.push_front(triangle);
+        std::cout<<!hashtable.empty()<<" "<<hashtable.size()<<std::endl;
         
     } 
     //save new polygons in mesh
@@ -99,7 +114,7 @@ int Remove_BE2(int option, int *poly, int length_poly, int num_BE, int *triangle
     
 }
 
-int generate_polygon_from_BE(int i, int * poly, int * triangles, int * adj, double *r, int ind_poly, node** hashtable_seed){
+int generate_polygon_from_BE(int i, int * poly, int * triangles, int * adj, double *r, int ind_poly, std::unordered_map<int,int> &hashtable){
 //    int ind_poly = 0;
 	
 	int initial_point = 0;
@@ -180,7 +195,8 @@ int generate_polygon_from_BE(int i, int * poly, int * triangles, int * adj, doub
     while (initial_point != end_point || triangugulo_initial != k) {
 
         /*se marca el triangulo visto como visitado y se suma al area del poligono */
-        searchandremove(hashtable_seed[hashy(k)], k);
+        hashtable.erase(k);
+
       //  visited[k] = TRUE;
         t0 = adj[3 * k + 0];
         t1 = adj[3 * k + 1];

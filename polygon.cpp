@@ -20,6 +20,16 @@
 #define debug_msg(fmt) do { if (DEBUG_TEST) fprintf(stderr, "%s:%d:%s(): " fmt, __FILE__,  __LINE__, __func__); } while (0)
 
 
+// Function to reverse elements of an array
+void reverse(int arr[], int n)
+{
+    for (int low = 0, high = n - 1; low < high; low++, high--)
+    {
+        int temp = arr[low];
+        arr[low] = arr[high];
+        arr[high] = temp;
+    }
+}
 
 //Verifica si es válido como triangulo semilla del poligono
 int is_BarrierEdge(int i, int *adj, int *adj_copy, int *root_id){

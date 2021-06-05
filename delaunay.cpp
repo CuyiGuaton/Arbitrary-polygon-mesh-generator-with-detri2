@@ -3,7 +3,8 @@
 #include <stdlib.h>     /* exit, EXIT_FAILURE */
 #include "detri2.h"
 #include <assert.h> 
-
+#include "polygon.h"
+#include "triang.h"
 
 detri2::Triangulation *trimesh;
 
@@ -145,10 +146,12 @@ void copy_delaunay_arrays(int tnumber, double *r, int* triangles, int* adj){
         }
         r[2*i + 0]= trimesh->in_vrts[i].crd[0];
         r[2*i + 1]= trimesh->in_vrts[i].crd[1];
-        //std::cout<<idx<<" ("<<r[2*i + 0]<<", "<<r[2*i + 1]<<") "<<std::endl;
+        //if(trimesh->in_vrts[i].tag)
+        //  std::cout<<idx<<" ("<<r[2*i + 0]<<", "<<r[2*i + 1]<<") "<<trimesh->in_vrts[i].tag<<std::endl;
         //Se le asigna a cada vértice un indice
         trimesh->in_vrts[i].idx = idx;
         idx++;
+
     }
     //Se le asigna a cada triangulo un indice, si es del hull es -1
     idx = 0;
@@ -176,7 +179,8 @@ void copy_delaunay_arrays(int tnumber, double *r, int* triangles, int* adj){
         adj[3*idx+ 0] = tri->nei[0].tri->idx;
         adj[3*idx+ 1] = tri->nei[1].tri->idx;
         adj[3*idx+ 2] = tri->nei[2].tri->idx;
-        //std::cout<<idx<<" | "<<triangles[3*idx+0]<<" "<<triangles[3*idx+1]<<" "<<triangles[3*idx+2]<<" | ";
+        //if(tri->tag)
+        //  std::cout<<idx<<" | "<<triangles[3*idx+0]<<" "<<triangles[3*idx+1]<<" "<<triangles[3*idx+2]<<" | ";
         //std::cout<<adj[3*idx+ 0]<<" "<<adj[3*idx+ 1]<<" "<<adj[3*idx+ 2]<<" | "<<std::endl;
         idx++;
     }
@@ -193,6 +197,45 @@ void copy_delaunay_arrays(int tnumber, double *r, int* triangles, int* adj){
     delete trimesh;   
 }
 
+
+int get_border_points(int pnumber, int tnumber, int *border, int * triangles, int * adj, double *r){
+
+  
+  double x_max, y_max; 
+  int extreme_point, length_border, initial_triangle;
+  x_max = r[2*0 + 0];
+  y_max = r[2*0 + 1];
+
+  for(int i = 0; i < pnumber; i++)
+    if(r[2*i + 0] > x_max)
+      x_max = r[2*i + 0];
+    
+  for(int i = 0; i < pnumber; i++)
+    if(r[2*i + 0] == x_max)
+      if(r[2*i + 0] > y_max){
+        extreme_point = i;
+        y_max = r[2*i + 0];
+      }
+  //std::cout<<"ep: "<<extreme_point<<" ("<<r[2*extreme_point + 0]<<", "<<r[2*extreme_point + 1]<<") "<<trivertex[extreme_point]<<std::endl;
+
+  //Asociate each vertex to an adjacent  triangle
+	for(int i = 0; i < pnumber; i++){
+		for (int j = 0; j < tnumber; j++)
+		{
+			if(i == triangles[3*j + 0] ||  i == triangles[3*j + 1] || i == triangles[3*j + 2]){
+        if(count_FrontierEdges(i, adj) > 0 )
+          initial_triangle = i;
+          break;
+			}
+		}
+		//std::cout<<"trivertex["<<i<<"] "<<trivertex[i]<<std::endl;
+	}
+
+  length_border = generate_polygon(initial_triangle, border, triangles, adj, r);
+  return length_border;
+  //print_poly(border, length_border);
+      
+}
 /*
 detri2::Triangulation *generate_mesh(int argc, char* argv[], detri2::Triangulation *Tr)
 {

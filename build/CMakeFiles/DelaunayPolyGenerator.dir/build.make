@@ -161,6 +161,32 @@ CMakeFiles/DelaunayPolyGenerator.dir/hashtable.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/DelaunayPolyGenerator.dir/hashtable.cpp.s"
 	/bin/g++-9 $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/cuyi/Dropbox/Doctorado/paper_examen/algo_with_detri2/hashtable.cpp -o CMakeFiles/DelaunayPolyGenerator.dir/hashtable.cpp.s
 
+CMakeFiles/DelaunayPolyGenerator.dir/metrics.cpp.o: CMakeFiles/DelaunayPolyGenerator.dir/flags.make
+CMakeFiles/DelaunayPolyGenerator.dir/metrics.cpp.o: ../metrics.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/cuyi/Dropbox/Doctorado/paper_examen/algo_with_detri2/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Building CXX object CMakeFiles/DelaunayPolyGenerator.dir/metrics.cpp.o"
+	/bin/g++-9  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/DelaunayPolyGenerator.dir/metrics.cpp.o -c /home/cuyi/Dropbox/Doctorado/paper_examen/algo_with_detri2/metrics.cpp
+
+CMakeFiles/DelaunayPolyGenerator.dir/metrics.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/DelaunayPolyGenerator.dir/metrics.cpp.i"
+	/bin/g++-9 $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/cuyi/Dropbox/Doctorado/paper_examen/algo_with_detri2/metrics.cpp > CMakeFiles/DelaunayPolyGenerator.dir/metrics.cpp.i
+
+CMakeFiles/DelaunayPolyGenerator.dir/metrics.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/DelaunayPolyGenerator.dir/metrics.cpp.s"
+	/bin/g++-9 $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/cuyi/Dropbox/Doctorado/paper_examen/algo_with_detri2/metrics.cpp -o CMakeFiles/DelaunayPolyGenerator.dir/metrics.cpp.s
+
+CMakeFiles/DelaunayPolyGenerator.dir/SmallestEnclosingCircle.cpp.o: CMakeFiles/DelaunayPolyGenerator.dir/flags.make
+CMakeFiles/DelaunayPolyGenerator.dir/SmallestEnclosingCircle.cpp.o: ../SmallestEnclosingCircle.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/cuyi/Dropbox/Doctorado/paper_examen/algo_with_detri2/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Building CXX object CMakeFiles/DelaunayPolyGenerator.dir/SmallestEnclosingCircle.cpp.o"
+	/bin/g++-9  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/DelaunayPolyGenerator.dir/SmallestEnclosingCircle.cpp.o -c /home/cuyi/Dropbox/Doctorado/paper_examen/algo_with_detri2/SmallestEnclosingCircle.cpp
+
+CMakeFiles/DelaunayPolyGenerator.dir/SmallestEnclosingCircle.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/DelaunayPolyGenerator.dir/SmallestEnclosingCircle.cpp.i"
+	/bin/g++-9 $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/cuyi/Dropbox/Doctorado/paper_examen/algo_with_detri2/SmallestEnclosingCircle.cpp > CMakeFiles/DelaunayPolyGenerator.dir/SmallestEnclosingCircle.cpp.i
+
+CMakeFiles/DelaunayPolyGenerator.dir/SmallestEnclosingCircle.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/DelaunayPolyGenerator.dir/SmallestEnclosingCircle.cpp.s"
+	/bin/g++-9 $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/cuyi/Dropbox/Doctorado/paper_examen/algo_with_detri2/SmallestEnclosingCircle.cpp -o CMakeFiles/DelaunayPolyGenerator.dir/SmallestEnclosingCircle.cpp.s
+
 # Object files for target DelaunayPolyGenerator
 DelaunayPolyGenerator_OBJECTS = \
 "CMakeFiles/DelaunayPolyGenerator.dir/main.cpp.o" \
@@ -170,7 +196,9 @@ DelaunayPolyGenerator_OBJECTS = \
 "CMakeFiles/DelaunayPolyGenerator.dir/mesh.cpp.o" \
 "CMakeFiles/DelaunayPolyGenerator.dir/delaunay.cpp.o" \
 "CMakeFiles/DelaunayPolyGenerator.dir/BET_elimitation.cpp.o" \
-"CMakeFiles/DelaunayPolyGenerator.dir/hashtable.cpp.o"
+"CMakeFiles/DelaunayPolyGenerator.dir/hashtable.cpp.o" \
+"CMakeFiles/DelaunayPolyGenerator.dir/metrics.cpp.o" \
+"CMakeFiles/DelaunayPolyGenerator.dir/SmallestEnclosingCircle.cpp.o"
 
 # External object files for target DelaunayPolyGenerator
 DelaunayPolyGenerator_EXTERNAL_OBJECTS =
@@ -183,10 +211,12 @@ DelaunayPolyGenerator: CMakeFiles/DelaunayPolyGenerator.dir/mesh.cpp.o
 DelaunayPolyGenerator: CMakeFiles/DelaunayPolyGenerator.dir/delaunay.cpp.o
 DelaunayPolyGenerator: CMakeFiles/DelaunayPolyGenerator.dir/BET_elimitation.cpp.o
 DelaunayPolyGenerator: CMakeFiles/DelaunayPolyGenerator.dir/hashtable.cpp.o
+DelaunayPolyGenerator: CMakeFiles/DelaunayPolyGenerator.dir/metrics.cpp.o
+DelaunayPolyGenerator: CMakeFiles/DelaunayPolyGenerator.dir/SmallestEnclosingCircle.cpp.o
 DelaunayPolyGenerator: CMakeFiles/DelaunayPolyGenerator.dir/build.make
 DelaunayPolyGenerator: detri2/libdetri2.a
 DelaunayPolyGenerator: CMakeFiles/DelaunayPolyGenerator.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/cuyi/Dropbox/Doctorado/paper_examen/algo_with_detri2/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Linking CXX executable DelaunayPolyGenerator"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/cuyi/Dropbox/Doctorado/paper_examen/algo_with_detri2/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_11) "Linking CXX executable DelaunayPolyGenerator"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/DelaunayPolyGenerator.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.

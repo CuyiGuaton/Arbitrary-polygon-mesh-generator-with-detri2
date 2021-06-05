@@ -9,9 +9,14 @@ CMakeFiles/DelaunayPolyGenerator.dir/BET_elimitation.cpp.o
  /home/cuyi/Dropbox/Doctorado/paper_examen/algo_with_detri2/mesh.h
  /home/cuyi/Dropbox/Doctorado/paper_examen/algo_with_detri2/polygon.h
  /home/cuyi/Dropbox/Doctorado/paper_examen/algo_with_detri2/triang.h
+CMakeFiles/DelaunayPolyGenerator.dir/SmallestEnclosingCircle.cpp.o
+ /home/cuyi/Dropbox/Doctorado/paper_examen/algo_with_detri2/SmallestEnclosingCircle.cpp
+ /home/cuyi/Dropbox/Doctorado/paper_examen/algo_with_detri2/SmallestEnclosingCircle.hpp
 CMakeFiles/DelaunayPolyGenerator.dir/delaunay.cpp.o
  ../detri2/detri2.h
  /home/cuyi/Dropbox/Doctorado/paper_examen/algo_with_detri2/delaunay.cpp
+ /home/cuyi/Dropbox/Doctorado/paper_examen/algo_with_detri2/polygon.h
+ /home/cuyi/Dropbox/Doctorado/paper_examen/algo_with_detri2/triang.h
 CMakeFiles/DelaunayPolyGenerator.dir/hashtable.cpp.o
  /home/cuyi/Dropbox/Doctorado/paper_examen/algo_with_detri2/hashtable.cpp
  /home/cuyi/Dropbox/Doctorado/paper_examen/algo_with_detri2/hashtable.h
@@ -19,6 +24,7 @@ CMakeFiles/DelaunayPolyGenerator.dir/io.cpp.o
  /home/cuyi/Dropbox/Doctorado/paper_examen/algo_with_detri2/consts.h
  /home/cuyi/Dropbox/Doctorado/paper_examen/algo_with_detri2/io.cpp
  /home/cuyi/Dropbox/Doctorado/paper_examen/algo_with_detri2/io.h
+ /home/cuyi/Dropbox/Doctorado/paper_examen/algo_with_detri2/metrics.h
  /home/cuyi/Dropbox/Doctorado/paper_examen/algo_with_detri2/triang.h
 CMakeFiles/DelaunayPolyGenerator.dir/main.cpp.o
  /home/cuyi/Dropbox/Doctorado/paper_examen/algo_with_detri2/BET_elimitation.h
@@ -31,6 +37,13 @@ CMakeFiles/DelaunayPolyGenerator.dir/main.cpp.o
  /home/cuyi/Dropbox/Doctorado/paper_examen/algo_with_detri2/triang.h
 CMakeFiles/DelaunayPolyGenerator.dir/mesh.cpp.o
  /home/cuyi/Dropbox/Doctorado/paper_examen/algo_with_detri2/mesh.cpp
+ /home/cuyi/Dropbox/Doctorado/paper_examen/algo_with_detri2/polygon.h
+CMakeFiles/DelaunayPolyGenerator.dir/metrics.cpp.o
+ /home/cuyi/Dropbox/Doctorado/paper_examen/algo_with_detri2/SmallestEnclosingCircle.hpp
+ /home/cuyi/Dropbox/Doctorado/paper_examen/algo_with_detri2/metrics.cpp
+ /home/cuyi/Dropbox/Doctorado/paper_examen/algo_with_detri2/metrics.h
+ /home/cuyi/Dropbox/Doctorado/paper_examen/algo_with_detri2/polygon.h
+ /home/cuyi/Dropbox/Doctorado/paper_examen/algo_with_detri2/triang.h
 CMakeFiles/DelaunayPolyGenerator.dir/polygon.cpp.o
  /home/cuyi/Dropbox/Doctorado/paper_examen/algo_with_detri2/consts.h
  /home/cuyi/Dropbox/Doctorado/paper_examen/algo_with_detri2/polygon.cpp
